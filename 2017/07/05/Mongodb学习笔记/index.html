@@ -1,0 +1,1099 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Microsoft YaHei:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="笔记," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="引用:MongoDB 教程 - 菜鸟教程 概念解析   SQL术语/概念 MongoDB术语/概念 解释/说明     database database 数据库   table collection 数据库表/集合   row document 行/文档   column field 列(字段)/字段(域)   index index 索引   table joins 表连接,MongoDB不支">
+<meta name="keywords" content="笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mongodb学习笔记">
+<meta property="og:url" content="http://yoursite.com/2017/07/05/Mongodb学习笔记/index.html">
+<meta property="og:site_name" content="zgjx的博客">
+<meta property="og:description" content="引用:MongoDB 教程 - 菜鸟教程 概念解析   SQL术语/概念 MongoDB术语/概念 解释/说明     database database 数据库   table collection 数据库表/集合   row document 行/文档   column field 列(字段)/字段(域)   index index 索引   table joins 表连接,MongoDB不支">
+<meta property="og:updated_time" content="2017-11-20T02:16:09.153Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mongodb学习笔记">
+<meta name="twitter:description" content="引用:MongoDB 教程 - 菜鸟教程 概念解析   SQL术语/概念 MongoDB术语/概念 解释/说明     database database 数据库   table collection 数据库表/集合   row document 行/文档   column field 列(字段)/字段(域)   index index 索引   table joins 表连接,MongoDB不支">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/05/Mongodb学习笔记/"/>
+
+
+
+
+
+  <title>Mongodb学习笔记 | zgjx的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zgjx的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">....-/.----/-..../...--/--.../...--/--.../....-/---../.----/----./....-/----./..---/----./...--/----./.----</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/Mongodb学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zgjx">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/user.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zgjx的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mongodb学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T22:21:32+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>引用:<br><a href="http://www.runoob.com/mongodb/mongodb-tutorial.html" target="_blank" rel="external">MongoDB 教程 - 菜鸟教程</a></p>
+<h4 id="概念解析"><a href="#概念解析" class="headerlink" title="概念解析"></a>概念解析</h4><table>
+<thead>
+<tr>
+<th>SQL术语/概念</th>
+<th>MongoDB术语/概念</th>
+<th>解释/说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>database</td>
+<td>database</td>
+<td>数据库</td>
+</tr>
+<tr>
+<td>table</td>
+<td>collection</td>
+<td>数据库表/集合</td>
+</tr>
+<tr>
+<td>row</td>
+<td>document</td>
+<td>行/文档</td>
+</tr>
+<tr>
+<td>column</td>
+<td>field</td>
+<td>列(字段)/字段(域)</td>
+</tr>
+<tr>
+<td>index</td>
+<td>index</td>
+<td>索引</td>
+</tr>
+<tr>
+<td>table</td>
+<td>joins</td>
+<td>表连接,MongoDB不支持</td>
+</tr>
+<tr>
+<td>primary key</td>
+<td>primary key</td>
+<td>主键,MongoDB自动将_id字段设置为主键</td>
+</tr>
+</tbody>
+</table>
+<h4 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h4><p>一个mongodb中可以建立多个数据库。<br>MongoDB的默认数据库为”db”，该数据库存储在data目录中。<br>MongoDB的单个实例可以容纳多个独立的数据库，每一个都有自己的集合和权限，不同的数据库也放置在不同的文件中。<br><code>show dbs</code>:显示所有数据的列表<br><code>db</code>:显示当前数据库对象或集合<br><code>use DATABASE_NAME</code>:如果数据库不存在，则创建数据库，否则切换到指定数据库<br><code>db.DATABASE_NAME.insert({&quot;name&quot;:&quot;菜鸟教程&quot;})</code>:插入数据<br>数据库也通过名字来标识。数据库名可以是满足以下条件的任意UTF-8字符串。  </p>
+<ul>
+<li>不能是空字符串（””)。</li>
+<li>不得含有’ ‘（空格)、.、$、/、\和\0 (空字符)。</li>
+<li>应全部小写。</li>
+<li>最多64字节。</li>
+</ul>
+<p>有一些数据库名是保留的，可以直接访问这些有特殊作用的数据库。</p>
+<ul>
+<li>admin： 从权限的角度来看，这是”root”数据库。要是将一个用户添加到这个数据库，这个用户自动继承所有数据库的权限。一些特定的服务器端命令也只能从这个数据库运行，比如列出所有的数据库或者关闭服务器。</li>
+<li>local: 这个数据永远不会被复制，可以用来存储限于本地单台服务器的任意集合</li>
+<li>config: 当Mongo用于分片设置时，config数据库在内部使用，用于保存分片的相关信息。</li>
+</ul>
+<h4 id="元数据"><a href="#元数据" class="headerlink" title="元数据"></a>元数据</h4><p>数据库的信息是存储在集合中。它们使用了系统的命名空间<br>|集合命名空间|描述|<br>|-|-|<br>|dbname.system.namespaces|列出所有名字空间。|<br>|dbname.system.indexes|列出所有索引。|<br>|dbname.system.profile|包含数据库概要(profile)信息。|<br>|dbname.system.users|列出所有可访问数据库的用户。|<br>|dbname.local.sources|包含复制对端（slave）的服务器信息和状态。|</p>
+<h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>String</td>
+<td>字符串。存储数据常用的数据类型。在 MongoDB 中，UTF-8 编码的字符串才是合法的。</td>
+</tr>
+<tr>
+<td>Integer</td>
+<td>整型数值。用于存储数值。根据你所采用的服务器，可分为 32 位或 64 位。</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>布尔值。用于存储布尔值（真/假）。</td>
+</tr>
+<tr>
+<td>Double</td>
+<td>双精度浮点值。用于存储浮点值。</td>
+</tr>
+<tr>
+<td>Min/Max keys</td>
+<td>将一个值与 BSON（二进制的 JSON）元素的最低值和最高值相对比。</td>
+</tr>
+<tr>
+<td>Arrays</td>
+<td>用于将数组或列表或多个值存储为一个键。</td>
+</tr>
+<tr>
+<td>Timestamp</td>
+<td>时间戳。记录文档修改或添加的具体时间。</td>
+</tr>
+<tr>
+<td>Object</td>
+<td>用于内嵌文档。</td>
+</tr>
+<tr>
+<td>Null</td>
+<td>用于创建空值。</td>
+</tr>
+<tr>
+<td>Symbol</td>
+<td>符号。该数据类型基本上等同于字符串类型，但不同的是，它一般用于采用特殊符号类型的语</td>
+<td>言。</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>日期时间。用 UNIX 时间格式来存储当前日期或时间。你可以指定自己的日期时间：创建 Date 对</td>
+<td>象，传入年月日信息。</td>
+</tr>
+<tr>
+<td>Object ID</td>
+<td>对象 ID。用于创建文档的 ID。</td>
+</tr>
+<tr>
+<td>Binary Data</td>
+<td>二进制数据。用于存储二进制数据。</td>
+</tr>
+<tr>
+<td>Code</td>
+<td>代码类型。用于在文档中存储 JavaScript 代码。</td>
+</tr>
+<tr>
+<td>Regular expression</td>
+<td>正则表达式类型。用于存储正则表达式。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><p><code>db.dropDatabase()</code>:删除当前数据库，默认为 test，你可以使用 db 命令查看当前数据库名。<br><code>db.collection.drop()</code>:删除集合(表)collection<br><code>show tables</code>:查看所有集合(表)  </p>
+<h4 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h4><p>所有存储在集合中的数据都是BSON格式。BSON是一种类json的一种二进制形式的存储格式,简称Binary JSON。<br><code>db.COLLECTION_NAME.insert(document)</code>:MongoDB 使用 insert() 或 save() 方法向集合中插入文档<br><code>db.COLLECTION_NAME.find()</code>:查看已插入文档<br><code>document={&quot;name&quot;:&quot;菜鸟教程&quot;}</code>,<code>db.COLLECTION_NAME.insert(document)</code>:定义为一个变量,然后执行插入操作<br>插入文档你也可以使用 db.COLLECTION_NAME.save(document) 命令。如果不指定 _id 字段 save() 方法类似于 insert() 方法。如果指定 _id 字段，则会更新该 _id 的数据。<br><code>db.COLLECTION_NAME.insertOne()</code>:向指定集合中插入一条文档数据<br><code>db.COLLECTION_NAME.insertMany()</code>:向指定集合中插入多条文档数据  </p>
+<h4 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h4><ul>
+<li>update()<br>用于更新已存在的文档。语法格式如下：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">db.collection.update(</div><div class="line">   &lt;query&gt;,</div><div class="line">   &lt;update&gt;,</div><div class="line">   &#123;</div><div class="line">     upsert: &lt;boolean&gt;,</div><div class="line">     multi: &lt;boolean&gt;,</div><div class="line">     writeConcern: &lt;document&gt;</div><div class="line">   &#125;</div><div class="line">)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>参数说明：</p>
+<blockquote>
+<ul>
+<li>query : update的查询条件，类似sql update查询内where后面的。</li>
+<li>update : update的对象和一些更新的操作符（如$,$inc…）等，也可以理解为sql update查询内set后面的</li>
+<li>upsert : 可选，这个参数的意思是，如果不存在update的记录，是否插入objNew,true为插入，默认是false，不插入。</li>
+<li>multi : 可选，mongodb 默认是false,只更新找到的第一条记录，如果这个参数为true,就把按条件查出来多条记录全部更新。</li>
+<li>writeConcern :可选，抛出异常的级别。</li>
+<li>备注:任何忽略的字段都被移除（文档被覆盖）</li>
+</ul>
+</blockquote>
+<p>如:<code>db.COLLECTION_NAME.update( { &quot;count&quot; : { $gt : 1 } } , { $set : { &quot;test2&quot; : &quot;OK&quot;} } );</code>  </p>
+<ul>
+<li>save()<br>通过传入的文档来替换已有文档。语法格式如下：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">db.collection.save(</div><div class="line">   &lt;document&gt;,</div><div class="line">   &#123;</div><div class="line">     writeConcern: &lt;document&gt;</div><div class="line">   &#125;</div><div class="line">)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>参数说明：  </p>
+<blockquote>
+<ul>
+<li>document : 文档数据。  </li>
+<li>writeConcern :可选，抛出异常的级别  </li>
+</ul>
+</blockquote>
+<p>如:<code>db.COLLECTION_NAME.save({&quot;_id&quot; : ObjectId(&quot;56064f89ade2f21f36b03136&quot;),&quot;title&quot; : &quot;MongoDB&quot;})</code>  </p>
+<ul>
+<li>$inc<br>操作符$inc可以为指定的键执行（原子）更新操作，如果字段存在，就将该值增加给定的增量，如果该字段不存在，就创建该字段。</li>
+<li>$set<br>可以使用$set操作符将某个字段设置为指定值。</li>
+<li>$unset<br>删除指定字段</li>
+<li>$rename<br>重命名字段名称</li>
+<li>$min $max<br>数值比较.如果给定值(value1)小于字段的当前值，则更新字段值为给定值。$min运算符可以比较不同类型的数字。</li>
+<li>$setOnInsert<br>如果更新操作设置upsert:true，执行insert操作时，$setOnInsert会给给定字段赋值给定值。如果更新操作不会导致插入数据，$setOnInsert不会有任何作用。</li>
+<li>$currentDate<br>$curentDate设置字段值为当前日期，可以设置Date类型或者timestamp类型。</li>
+<li><a href="http://blog.csdn.net/sunnyyoona/article/details/52420210" target="_blank" rel="external"> [MongoDB]Update更新数据</a></li>
+</ul>
+<h4 id="删除-1"><a href="#删除-1" class="headerlink" title="删除"></a>删除</h4><p>MongoDB remove()函数是用来移除集合中的数据。<br>MongoDB数据更新可以使用update()函数。在执行remove()函数前先执行find()命令来判断执行的条件是否正确，这是一个比较好的习惯。<br>remove() 方法的基本语法格式如下所示:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">db.collection.remove(</div><div class="line">   &lt;query&gt;,</div><div class="line">   &#123;</div><div class="line">     justOne: &lt;boolean&gt;,</div><div class="line">     writeConcern: &lt;document&gt;</div><div class="line">   &#125;</div><div class="line">)</div></pre></td></tr></table></figure></p>
+<p>参数说明：</p>
+<ul>
+<li>query :（可选）删除的文档的条件。</li>
+<li>justOne : （可选）如果设为 true 或 1，则只删除一个文档。</li>
+<li>writeConcern :（可选）抛出异常的级别。</li>
+</ul>
+<h4 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h4><p>MongoDB 查询文档使用 find() 方法。<br>find() 方法以非结构化的方式来显示所有文档。<br>MongoDB 查询数据的语法格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.collection.find(query, projection)</div></pre></td></tr></table></figure></p>
+<ul>
+<li>query ：可选，使用查询操作符指定查询条件</li>
+<li>projection ：可选，使用投影操作符指定返回的键。查询时返回文档中所有键值， 只需省略该参数即可（默认省略）。</li>
+</ul>
+<p>如果你需要以易读的方式来读取数据，可以使用 pretty() 方法，语法格式如下：<code>db.col.find().pretty()</code>,pretty() 方法以格式化的方式来显示所有文档。<br>除了 find() 方法之外，还有一个 findOne() 方法，它只返回一个文档。</p>
+<h4 id="条件操作符"><a href="#条件操作符" class="headerlink" title="条件操作符"></a>条件操作符</h4><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>符号</th>
+<th>原文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&gt;大于</td>
+<td>$gt</td>
+<td>greater than</td>
+</tr>
+<tr>
+<td>&lt;小于</td>
+<td>$lt</td>
+<td>less than</td>
+</tr>
+<tr>
+<td>&gt;=大于等于</td>
+<td>$gte</td>
+<td>gt equal</td>
+</tr>
+<tr>
+<td>&lt;=小于等于</td>
+<td>$lte</td>
+<td>lt equal</td>
+</tr>
+<tr>
+<td>!=不等于</td>
+<td>$ne</td>
+<td>not equal</td>
+</tr>
+<tr>
+<td>=等于</td>
+<td>$eq</td>
+<td>equal</td>
+</tr>
+</tbody>
+</table>
+<p>获取 “col” 集合中 “likes” 大于 100 的数据:<code>db.col.find({&quot;likes&quot; : {$gt : 100}})</code>,类似于SQL语句：<code>Select * from col where likes &gt; 100;</code></p>
+<h4 id="type-操作符"><a href="#type-操作符" class="headerlink" title="$type 操作符"></a>$type 操作符</h4><p>$type操作符是基于BSON类型来检索集合中匹配的数据类型，并返回结果。<br>MongoDB 中可以使用的类型如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>数字</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Double</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>String</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr>
+<td>Object</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>Array</td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>Binary data</td>
+<td>5</td>
+<td></td>
+</tr>
+<tr>
+<td>Undefined</td>
+<td>6</td>
+<td>已废弃。</td>
+</tr>
+<tr>
+<td>Object id</td>
+<td>7</td>
+<td></td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>8</td>
+<td></td>
+</tr>
+<tr>
+<td>Date</td>
+<td>9</td>
+<td></td>
+</tr>
+<tr>
+<td>Null</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td>Regular Expression</td>
+<td>11</td>
+<td></td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td>13</td>
+<td></td>
+</tr>
+<tr>
+<td>Symbol</td>
+<td>14</td>
+<td></td>
+</tr>
+<tr>
+<td>JavaScript (with scope)</td>
+<td>15</td>
+<td></td>
+</tr>
+<tr>
+<td>32-bit integer</td>
+<td>16</td>
+<td></td>
+</tr>
+<tr>
+<td>Timestamp</td>
+<td>17</td>
+<td></td>
+</tr>
+<tr>
+<td>64-bit integer</td>
+<td>18</td>
+<td></td>
+</tr>
+<tr>
+<td>Min key</td>
+<td>255</td>
+<td>Query with -1.</td>
+</tr>
+<tr>
+<td>Max key</td>
+<td>127</td>
+</tr>
+</tbody>
+</table>
+<p>获取 “col” 集合中 title 为 String 的数据:<code>db.col.find({&quot;title&quot; : {$type : 2}})</code></p>
+<h4 id="Limit与Skip方法"><a href="#Limit与Skip方法" class="headerlink" title="Limit与Skip方法"></a>Limit与Skip方法</h4><blockquote>
+<p>Limit(),读取指定数量的数据记录,limit()方法接受一个数字参数，该参数指定从MongoDB中读取的记录条数。<br>limit()方法基本语法如下所示:<code>db.COLLECTION_NAME.find().limit(NUMBER)</code>  </p>
+<p>Skip(),跳过指定数量的数据,skip方法同样接受一个数字参数作为跳过的记录条数。<br>skip() 方法脚本语法格式如下:<code>db.COLLECTION_NAME.find().limit(NUMBER).skip(NUMBER)</code></p>
+</blockquote>
+<p>想要读取从 10 条记录后 100 条记录，相当于 sql 中limit (10,100):<code>db.COLLECTION_NAME.find().skip(10).limit(100)</code><br>当查询时同时使用sort,skip,limit，无论位置先后，最先执行顺序 sort再skip再limit。</p>
+<h4 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h4><p>在MongoDB中使用使用sort()方法对数据进行排序，sort()方法可以通过参数指定排序的字段，并使用 1 和 -1 来指定排序的方式，其中 1 为升序排列，而-1是用于降序排列。<br>sort()方法基本语法如下所示：<code>db.COLLECTION_NAME.find().sort({KEY:1})</code></p>
+<h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><p>索引通常能够极大的提高查询的效率，如果没有索引，MongoDB在读取数据时必须扫描集合中的每个文件并选取那些符合查询条件的记录。<br>这种扫描全集合的查询效率是非常低的，特别在处理大量的数据时，查询可以要花费几十秒甚至几分钟，这对网站的性能是非常致命的。<br>索引是特殊的数据结构，索引存储在一个易于遍历读取的数据集合中，索引是对数据库表中一列或多列的值进行排序的一种结构。<br>ensureIndex()方法基本语法格式如下所示：<code>db.COLLECTION_NAME.ensureIndex({KEY:1})</code>,语法中 Key 值为你要创建的索引字段，1为指定按升序创建索引，如果你想按降序来创建索引指定为-1即可。<br>ensureIndex() 方法中你也可以设置使用多个字段创建索引（关系型数据库中称作复合索引）。<br><code>db.col.ensureIndex({&quot;title&quot;:1,&quot;description&quot;:-1})</code><br>ensureIndex() 接收可选参数，可选参数列表如下：<br>|Parameter|Type|Description|<br>|-|-|-|<br>|background|Boolean|建索引过程会阻塞其它数据库操作，background可指定以后台方式创建索引，即增加 “background” 可选参数。 “background” 默认值为false。|<br>|unique|Boolean|建立的索引是否唯一。指定为true创建唯一索引。默认值为false.|<br>|name|string|索引的名称。如果未指定，MongoDB的通过连接索引的字段名和排序顺序生成一个索引名称。|<br>|dropDups|Boolean|在建立唯一索引时是否删除重复记录,指定 true 创建唯一索引。默认值为 false.|<br>|sparse|Boolean|对文档中不存在的字段数据不启用索引；这个参数需要特别注意，如果设置为true的话，在索引字段中不会查询出不包含对应字段的文档.。默认值为 false.|<br>|expireAfterSeconds|integer|指定一个以秒为单位的数值，完成 TTL设定，设定集合的生存时间。|<br>|v|index version|索引的版本号。默认的索引版本取决于mongod创建索引时运行的版本。|<br>|weights|document|索引权重值，数值在 1 到 99,999 之间，表示该索引相对于其他索引字段的得分权重。|<br>|default_language|string|对于文本索引，该参数决定了停用词及词干和词器的规则的列表。 默认为英语|<br>|language_override|string|对于文本索引，该参数指定了包含在文档中的字段名，语言覆盖默认的language，默认值为 language.|</p>
+<blockquote>
+<p>附：<a href="http://www.cnblogs.com/stephen-liu74/archive/2012/08/01/2561557.html" target="_blank" rel="external">MongoDB学习笔记(索引)</a></p>
+</blockquote>
+<h4 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h4><p>MongoDB中聚合(aggregate)主要用于处理数据(诸如统计平均值,求和等)，并返回计算后的数据结果。有点类似sql语句中的 count(*)。<br>aggregate() 方法的基本语法格式如下所示：<code>db.COLLECTION_NAME.aggregate(AGGREGATE_OPERATION)</code><br>下表展示了一些聚合的表达式:<br>|表达式|描述|实例|<br>|-|-|-|<br>|$sum|计算总和。|db.mycol.aggregate([{$group : {_id : “$by_user”, num_tutorial : {$sum : “$likes”}}}])|<br>|$avg|计算平均值|db.mycol.aggregate([{$group : {_id : “$by_user”, num_tutorial : {$avg : “$likes”}}}])|<br>|$min|获取集合中所有文档对应值得最小值。|db.mycol.aggregate([{$group : {_id : “$by_user”, num_tutorial : {$min : “$likes”}}}])|<br>|$max|获取集合中所有文档对应值得最大值。|db.mycol.aggregate([{$group : {_id : “$by_user”, num_tutorial : {$max : “$likes”}}}])|<br>|$push|在结果文档中插入值到一个数组中。|db.mycol.aggregate([{$group : {_id : “$by_user”, url : {$push: “$url”}}}])|<br>|$addToSet|在结果文档中插入值到一个数组中，但不创建副本。|db.mycol.aggregate([{$group : {_id : “$by_user”, url : {$addToSet : “$url”}}}])|<br>|$first|根据资源文档的排序获取第一个文档数据。|db.mycol.aggregate([{$group : {_id : “$by_user”, first_url : {$first : “$url”}}}])|<br>|$last|根据资源文档的排序获取最后一个文档数据|db.mycol.aggregate([{$group : {_id : “$by_user”, last_url : {$last : “$url”}}}])|</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/05/Metasploit学习笔记/" rel="next" title="Metasploit学习笔记">
+                <i class="fa fa-chevron-left"></i> Metasploit学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/05/社会工程学/" rel="prev" title="社会工程学学习笔记">
+                社会工程学学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/user.png"
+               alt="zgjx" />
+          <p class="site-author-name" itemprop="name">zgjx</p>
+           
+              <p class="site-description motion-element" itemprop="description">My blog</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zgjx6" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/780c677673ef" target="_blank" title="Jianshu">
+                  
+                    <i class="fa fa-fw fa-book"></i>
+                  
+                  Jianshu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#概念解析"><span class="nav-number">1.</span> <span class="nav-text">概念解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据库"><span class="nav-number">2.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#元数据"><span class="nav-number">3.</span> <span class="nav-text">元数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据类型"><span class="nav-number">4.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除"><span class="nav-number">5.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入"><span class="nav-number">6.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新"><span class="nav-number">7.</span> <span class="nav-text">更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除-1"><span class="nav-number">8.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询"><span class="nav-number">9.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件操作符"><span class="nav-number">10.</span> <span class="nav-text">条件操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#type-操作符"><span class="nav-number">11.</span> <span class="nav-text">$type 操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Limit与Skip方法"><span class="nav-number">12.</span> <span class="nav-text">Limit与Skip方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排序"><span class="nav-number">13.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引"><span class="nav-number">14.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#聚合"><span class="nav-number">15.</span> <span class="nav-text">聚合</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zgjx</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.1"></script>
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,839 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Microsoft YaHei:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="文章," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Infer的安装教程，包括docker镜像安装和linux编译源码两种安装方式">
+<meta name="keywords" content="文章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Facebook静态代码分析工具Infer安装教程">
+<meta property="og:url" content="http://yoursite.com/2017/06/23/Facebook静态代码分析工具Infer安装教程/index.html">
+<meta property="og:site_name" content="zgjx的博客">
+<meta property="og:description" content="Infer的安装教程，包括docker镜像安装和linux编译源码两种安装方式">
+<meta property="og:updated_time" content="2017-06-26T02:21:28.266Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Facebook静态代码分析工具Infer安装教程">
+<meta name="twitter:description" content="Infer的安装教程，包括docker镜像安装和linux编译源码两种安装方式">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/23/Facebook静态代码分析工具Infer安装教程/"/>
+
+
+
+
+
+  <title>Facebook静态代码分析工具Infer安装教程 | zgjx的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zgjx的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">....-/.----/-..../...--/--.../...--/--.../....-/---../.----/----./....-/----./..---/----./...--/----./.----</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/23/Facebook静态代码分析工具Infer安装教程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zgjx">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/user.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zgjx的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Facebook静态代码分析工具Infer安装教程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-23T16:54:52+08:00">
+                2017-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/文章/" itemprop="url" rel="index">
+                    <span itemprop="name">文章</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Infer的安装教程，包括docker镜像安装和linux编译源码两种安装方式
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Infer是Facebook一款开源的静态分析工具。Infer可以分析Objective-C，Java或者C代码，重点作用于分析APP（Android/iOS）项目，报告潜在的问题。Infer已经成为 Facebook 开发流程的一个环节，包括Facebook Android和iOS主客户端，Facebook Messenger，Instagram在内的，以及其他影响亿万用户的手机应用，每次代码变更，都要经过Infer的检测。 </p>
+<p>Infer相比其它静态分析工具的优点： </p>
+<ol>
+<li>是一款开源静态的代码分析工具；  </li>
+<li>效率高，规模大，几分钟可以扫描数千行代码； </li>
+<li>支持增量及非增量分析；  </li>
+<li>分解分析，整合输出结果。Infer能将代码分解，小范围分析后再将结果整合在一起，兼顾分析的深度和速度。 </li>
+</ol>
+<p>Infer捕捉的bug类型： </p>
+<ol>
+<li>Java中捕捉的bug类型<ul>
+<li><code>Resource leak</code></li>
+<li><code>Null dereference</code></li>
+</ul>
+</li>
+<li>C/OC中捕捉的bug类型 <ul>
+<li><code>Resource leak</code></li>
+<li><code>Memory leak</code></li>
+<li><code>Null dereference</code></li>
+<li><code>Premature nil termination argument</code></li>
+</ul>
+</li>
+<li>只在OC中捕捉的bug类型<ul>
+<li><code>Retain cycle</code></li>
+<li><code>Parameter not null checked</code></li>
+<li><code>Ivar not null checked</code><h2 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h2></li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><a href="https://github.com/facebook/infer" target="_blank" rel="external">Infer的Github地址</a></li>
+<li><a href="http://fbinfer.com/" target="_blank" rel="external">Infer的官方网站(需翻墙)</a></li>
+<li><a href="http://fbinfer.com/docs/getting-started.html" target="_blank" rel="external">Infer的官方安装教程(需翻墙)</a></li>
+<li><a href="https://github.com/facebook/infer/releases" target="_blank" rel="external">Infer的release版下载地址</a></li>
+<li><a href="https://github.com/facebook/infer/tree/master/examples" target="_blank" rel="external">Infer的example使用教程</a></li>
+<li><a href="https://infer.liaohuqiu.net/docs/getting-started.html" target="_blank" rel="external">Infer中文版帮助文档</a>(部分已过时)</li>
+</ul>
+<blockquote>
+<p>本文使用docker和linux两种方式安装，推荐使用linux安装。<br>安装时间为2017.06.20，版本为0.12.0。</p>
+</blockquote>
+<h2 id="1-使用Docker镜像安装"><a href="#1-使用Docker镜像安装" class="headerlink" title="1. 使用Docker镜像安装"></a>1. 使用Docker镜像安装</h2><h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ul>
+<li>Docker可以在win及linux双平台安装，本文使用win7 64位。使用此方法需会使用docker，本人也是第一次使用，如有错误之处欢迎指正。</li>
+<li>安装过程需要联网并下载约1.5G数据，请确保网络状况良好且本地硬盘空间足够，且尽量不要在有代理的环境中安装。</li>
+<li>如果系统开启了Hyper-V，需要在控制面板-程序-打开或关闭Windows功能中关闭。</li>
+</ul>
+<h4 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h4><ol>
+<li>(如果已安装docker可跳过1-5步)首先进入<a href="https://store.docker.com/editions/community/docker-ce-desktop-windows" target="_blank" rel="external">docker官网的下载页面</a>,找到最新的windows稳定版本下载。</li>
+<li>安装<code>docker</code>。需要注意的是如果本机没有安装<code>VirtualBox</code>和<code>Git</code>，则需要在安装过程中勾选上。</li>
+<li>先别忙打开docker，先打开docker的安装目录，找到安装根目录下的boot2docker.iso，将其复制到<code>%HOME%\\.docker\machine\cache</code>目录下。</li>
+<li>在桌面找到<code>Docker Quickstart Terminal</code>的图标，双击进入命令行。第一次打开会自动创建一个名为<code>default</code>的docker machine，创建的docker默认保存在<code>%HOME%\\.docker\machine\machines</code>。也可以使用指令<code>docker-machine create --driver virtualbox test</code>创建一个名叫<code>test</code>的<code>docker machine</code>。</li>
+<li>docker安装完毕后会为每一个machine分配一个IP，默认的为<code>192.168.99.100</code>，以后的machine的IP会进行递增。打开命令行会自动启动默认的machine，可以使用<code>docker-machine ls</code>查看每一个machine的状态。也可以使用<code>docker-machine start default</code>启动名为default的machine（stop为停止，restart为重启）。docker machine实际上就是一个linux虚拟机，所以也可以使用VirtualBox进行管理。</li>
+<li>使用<code>SSH工具</code>连接docker machine。可以使用xshell或SecureCRT等工具连接，默认ip即为<code>192.168.99.100</code>，默认用户名和密码为<code>docker/tcuser</code>。</li>
+<li><p>安装<code>infer</code>镜像。运行如下三条指令即可，安装过程需下载约1.5G数据，安装时间视网络情况而定。安装完毕后可执行指令<code>docker images</code>查看所有已安装的镜像。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget -O Dockerfile https://raw.githubusercontent.com/facebook/infer/master/docker/Dockerfile</div><div class="line">wget -O run.sh https://raw.githubusercontent.com/facebook/infer/master/docker/run.sh</div><div class="line">sh run.sh</div></pre></td></tr></table></figure></p>
+</li>
+<li><p>使用infer。执行指令<code>docker run -it infer</code>启动一个容器。启动后会自动进入infer的examples目录，如果没有可以执行<code>cd /infer/examples</code>。直接执行<code>infer -- javac Hello.java</code>可以看到分析java文件的结果。执行<code>cd android_hello;infer -- ./gradlew build</code>可以看到分析安卓项目的结果。</p>
+</li>
+<li>扫描自己的安卓项目。由于源码是放在win中的，而infer是在docker里面的，所以要扫描自己的项目则需要将源码放进docker容器中。首先打开VirtualBox找到default，右键-设置-共享文件夹，在右侧找到添加共享文件夹的图标，选择存放源码的本地目录，再给共享文件夹取一个名称（如files），勾选自动挂载和固定分配，重新启动default后连接上去，切换到根目录下即可看到共享的文件夹。执行<code>docker run -itd infer</code>在后台启动一个容器，执行<code>docker ps</code>查看所有正在运行的容器，执行<code>docker cp /&lt;源路径&gt; 容器ID:/&lt;目标路径&gt;</code>将源码从docker复制到容器中，执行<code>docker attach 容器ID</code>进入容器，找到cp时的目标路径即为源码，再将源码替换掉example目录里面的文件，使用相同的指令即可扫描。另外，docker容器关闭后不会保存里面新增或修改的文件，若需保存至镜像中，需执行<code>docker commit 容器ID infer:latest</code>。</li>
+</ol>
+<h2 id="2-使用Infer源码安装"><a href="#2-使用Infer源码安装" class="headerlink" title="2. 使用Infer源码安装"></a>2. 使用Infer源码安装</h2><blockquote>
+<p>源码安装时不同的操作系统略有不同，可参考官方教程。我的操作系统为ubuntu14.04_64位。安装过程中可能会有一些报错，但是我忘记记录了，如有问题可联系我。</p>
+</blockquote>
+<ol>
+<li>安装依赖。可参考官方github-<a href="https://github.com/facebook/infer/blob/master/INSTALL.md#pre-compiled-versions" target="_blank" rel="external">How to install Infer from source</a>，ubuntu14执行：<code>sudo apt-get install -y autoconf automake build-essential git libgmp-dev libmpc-dev libmpfr-dev m4 openjdk-8-jdk pkg-config python-software-properties unzip zlib1g-dev</code></li>
+<li>前往Infer的github中下载最新的release版，<a href="https://github.com/facebook/infer/releases" target="_blank" rel="external">下载地址</a></li>
+<li><p>下载完成后依次执行如下指令，其中的文件名替换为下载的文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tar xf infer-&lt;release&gt;.tar.xz </div><div class="line">cd infer-&lt;release&gt;/ </div><div class="line">./build-infer.sh java </div><div class="line">make install</div></pre></td></tr></table></figure></p>
+</li>
+<li><p>分析java。安装完毕后切换到安装根目录下的examples，执行<code>infer -- javac Hello.java</code>即可分析自带的java文件</p>
+</li>
+<li>分析android项目。需要确保jdk版本为1.8，sdk需确保安装</li>
+</ol>
+<ul>
+<li>android sdk tools</li>
+<li>android sdk platform-tools</li>
+<li>android 5.1.1(API22)(必须22版)  中的  sdk platform</li>
+<li>android support repository</li>
+</ul>
+<ol>
+<li>然后下载<code>https://services.gradle.org/distributions/gradle-3.4-bin.zip</code></li>
+<li>切换到infer的<code>expamle/android_hello/gradle/wrapper</code>目录下，将下载的jar包放进去，注释掉<code>gradle-wrapper.properties</code>文件最后一行，添加<code>distributionUrl=gradle-3.4-bin.zip</code></li>
+<li>切换到expamle/android_hello目录下，执行<code>infer -- ./gradlew build</code>即可分析安卓项目。注意，如果要再次分析，需先执行<code>./gradlew clean</code></li>
+</ol>
+<p>docker安装过程较为容易，但是使用起来较为麻烦；<br>linux安装过程问题比较多，但是后续使用起来要容易一点。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/文章/" rel="tag"># 文章</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/27/Shell简单教程/" rel="next" title="Shell简单教程">
+                <i class="fa fa-chevron-left"></i> Shell简单教程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/26/git_error1/" rel="prev" title="Git提交时提示"fatal unable to get credential storage lock File exists"的解决办法">
+                Git提交时提示"fatal unable to get credential storage lock File exists"的解决办法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/user.png"
+               alt="zgjx" />
+          <p class="site-author-name" itemprop="name">zgjx</p>
+           
+              <p class="site-description motion-element" itemprop="description">My blog</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zgjx6" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/780c677673ef" target="_blank" title="Jianshu">
+                  
+                    <i class="fa fa-fw fa-book"></i>
+                  
+                  Jianshu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源"><span class="nav-number">2.</span> <span class="nav-text">资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-使用Docker镜像安装"><span class="nav-number">3.</span> <span class="nav-text">1. 使用Docker镜像安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注意事项"><span class="nav-number">3.0.1.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装过程"><span class="nav-number">3.0.2.</span> <span class="nav-text">安装过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-使用Infer源码安装"><span class="nav-number">4.</span> <span class="nav-text">2. 使用Infer源码安装</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zgjx</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.1"></script>
+
+
+  
+
+</body>
+</html>

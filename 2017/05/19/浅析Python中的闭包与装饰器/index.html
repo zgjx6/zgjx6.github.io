@@ -1,0 +1,771 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Microsoft YaHei:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="文章," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="导读：Python中的装饰器经常用于有切面需求的场景，较为经典的有插入日志、性能测试、事务处理等。本文从闭包的概念引入，并以实例形式对装饰器及其应用进行了讲解。">
+<meta name="keywords" content="文章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅析Python中的闭包与装饰器">
+<meta property="og:url" content="http://yoursite.com/2017/05/19/浅析Python中的闭包与装饰器/index.html">
+<meta property="og:site_name" content="zgjx的博客">
+<meta property="og:description" content="导读：Python中的装饰器经常用于有切面需求的场景，较为经典的有插入日志、性能测试、事务处理等。本文从闭包的概念引入，并以实例形式对装饰器及其应用进行了讲解。">
+<meta property="og:updated_time" content="2017-07-11T05:44:14.175Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅析Python中的闭包与装饰器">
+<meta name="twitter:description" content="导读：Python中的装饰器经常用于有切面需求的场景，较为经典的有插入日志、性能测试、事务处理等。本文从闭包的概念引入，并以实例形式对装饰器及其应用进行了讲解。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/19/浅析Python中的闭包与装饰器/"/>
+
+
+
+
+
+  <title>浅析Python中的闭包与装饰器 | zgjx的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zgjx的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">....-/.----/-..../...--/--.../...--/--.../....-/---../.----/----./....-/----./..---/----./...--/----./.----</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/19/浅析Python中的闭包与装饰器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zgjx">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/user.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zgjx的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">浅析Python中的闭包与装饰器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-19T14:36:38+08:00">
+                2017-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/文章/" itemprop="url" rel="index">
+                    <span itemprop="name">文章</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>导读：Python中的装饰器经常用于有切面需求的场景，较为经典的有插入日志、性能测试、事务处理等。本文从闭包的概念引入，并以实例形式对装饰器及其应用进行了讲解。<br><a id="more"></a></p>
+<h3 id="Python变量作用域"><a href="#Python变量作用域" class="headerlink" title="Python变量作用域"></a>Python变量作用域</h3><p>在了解闭包之前，我们得先了解一下python解释器查找变量时的规则。在python中，查找一个变量名称的顺序为local--&gt;enclosing function locals--&gt;global--&gt;builtin，简称LEGB。它们各自的含义如下：</p>
+<ol>
+<li>Local - 当前所在命名空间（如函数、模块），函数的参数也属于命名空间内的变量</li>
+<li>Enclosing - 外部嵌套函数的命名空间</li>
+<li>Global - 全局变量，函数定义所在模块的命名空间</li>
+<li>Builtin - 内置模块的命名空间<br>举例说明：<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">val1=<span class="number">0</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fun</span><span class="params">(val2)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Max</span><span class="params">()</span>:</span></div><div class="line">        <span class="keyword">return</span> max(val1, val2)</div><div class="line">    <span class="keyword">return</span> Max()</div><div class="line"></div><div class="line">print(fun(<span class="number">1</span>))</div><div class="line"><span class="comment"># 输出：1</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在本例中，val1即为Global；而val2，对函数fun而言为Local，对嵌套的函数Max而言就是Enclosing；小写的函数max并没有定义，但我们可以直接使用，因为它是python标准库里的函数，即为Builtin。</p>
+<h3 id="闭包的概念"><a href="#闭包的概念" class="headerlink" title="闭包的概念"></a>闭包的概念</h3><p>在计算机科学中，闭包（Closure）是词法闭包（Lexical Closure）的简称，是引用了自由变量的函数，它是将组成函数的语句和这些语句的执行环境打包在一起时，得到的对象，即闭包=函数块+定义函数时的环境。在Python中，一切皆对象，函数也是一个对象，它可以当作一个参数被传入，也可以作为一个结果被返回。Python以函数对象为基础，为闭包提供了语法支持。现在举个例子说明一下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">a</span><span class="params">(m)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">b</span><span class="params">(n)</span>:</span></div><div class="line">        print(m,n)</div><div class="line">    <span class="keyword">return</span> b</div><div class="line"></div><div class="line">c=a(<span class="string">'hello'</span>)</div><div class="line">c(<span class="string">'test1'</span>)  <span class="comment"># 输出：hello test1</span></div><div class="line">c(<span class="string">'test2'</span>)  <span class="comment"># 输出：hello test2</span></div></pre></td></tr></table></figure></p>
+<p>在这个例子中，调用函数a时就产生了一个闭包b，并且该闭包拥有enclosing变量m，通过最后两个测试的例子可以看出，在函数a执行完成后，变量m依然存在，这是因为它被闭包b引用了，所以不会被回收。另外可以看出，本例中闭包其实就是一个引用了enclosing变量m的函数。</p>
+<h3 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h3><p>装饰器，就是将被装饰的函数当作参数传递给与装饰器对应的函数（名称相同的函数），并返回包装后的被装饰的函数。在Python中，装饰器被用于用@语法糖修辞的函数或类。装饰器有很多作用，一种常用的方法是将其作为一种函数调用日志记录器。现举例说明：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">log</span><span class="params">(func)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kw)</span>:</span></div><div class="line">        print(func.__name__ + <span class="string">' is running'</span>)</div><div class="line">        <span class="keyword">return</span> func(*args, **kw)</div><div class="line">    <span class="keyword">return</span> wrapper</div><div class="line"></div><div class="line"><span class="meta">@log</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fun</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello'</span>)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    fun()</div><div class="line"><span class="string">'''</span></div><div class="line">执行结果：</div><div class="line">fun is running</div><div class="line">hello</div><div class="line">'''</div></pre></td></tr></table></figure></p>
+<p>在本例中，log函数返回了一个闭包wrapper,它引用了一个变量func。而定义函数fun时的@log，即可看作fun=log(fun)，@log只是一种更直观的写法。而装饰器即为对闭包的一种应用，只不过它传递的变量是函数罢了。<br>装饰器本身接收一个函数作为参数，但是有时候我们需要装饰器接受另外的参数，此时需要在外层再加一层函数，修改上例如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> functools</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">log</span><span class="params">(text)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decorator</span><span class="params">(func)</span>:</span></div><div class="line"><span class="meta">        @functools.wraps(func)</span></div><div class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kw)</span>:</span></div><div class="line">            print(text + func.__name__ + <span class="string">' is running'</span>)</div><div class="line">            <span class="keyword">return</span> func(*args, **kw)</div><div class="line">        <span class="keyword">return</span> wrapper</div><div class="line">    <span class="keyword">return</span> decorator</div><div class="line"></div><div class="line"><span class="meta">@log('test:')</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fun</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'hello'</span>)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    fun()</div><div class="line">    print(fun.__name__)</div><div class="line"><span class="string">'''</span></div><div class="line">执行结果：</div><div class="line">test:fun is running</div><div class="line">hello</div><div class="line">fun</div><div class="line">'''</div></pre></td></tr></table></figure></p>
+<p>这里的log函数即为一个带参数的装饰器，它其实是对原有装饰器的一种封装。使用装饰器的一个缺点是无法保存原有函数的信息，如本例中的__name__属性，使用python内置的functools即可解决这个问题，可以看到本例最后的输出依然为fun，如果不使用functools，最后的输出将为wrapper。<br>通过上述两例可以看出，一个函数不用做任何修改，只需要在定义的地方加上装饰器，调用的方式也不用做任何改变，即可完成对函数功能的增强。如果代码中含有大量类似的函数，那么我们就可以直接在定义函数的地方加上装饰器，而不必修改每一个函数，这样不仅可以提高程序的可复用性，也可以提高程序的可读性。</p>
+<h3 id="装饰器的应用"><a href="#装饰器的应用" class="headerlink" title="装饰器的应用"></a>装饰器的应用</h3><p>装饰器其实就是一个包装函数的函数，它可以为已经存在的对象添加额外的功能，因此经常被用于有切面需求的场景，较为经典的有插入日志、 性能测试、事务处理等。比如在python的轻量级web开发框架flask中，大量地使用装饰器，用flask开发的代码简洁而又优雅，极具python的风格。一个flask的DEMO如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</div><div class="line">app = Flask(__name__)</div><div class="line"></div><div class="line"><span class="meta">@app.route("/")</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="string">"Hello World!"</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    app.run()</div></pre></td></tr></table></figure></p>
+<p>flask的默认端口为5000，使用浏览器打开<a href="http://localhost:5000/，即可看到结果。在此例中，flask使用app.route装饰器将一个url绑定到对应的函数，非常简单而又直观。" target="_blank" rel="external">http://localhost:5000/，即可看到结果。在此例中，flask使用app.route装饰器将一个url绑定到对应的函数，非常简单而又直观。</a></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Python的装饰器本质上是对闭包的一种应用，但它不仅可以用函数实现，也可以用类实现，并且还可以一次性使用多个装饰器。虽然定义起来有点复杂，但使用起来却非常灵活和方便。它可以极大地增强函数的功能，同时又不会增加调用者的负担，维护起来也非常地容易。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/文章/" rel="tag"># 文章</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/19/欢迎使用 Cmd Markdown 编辑阅读器/" rel="next" title="欢迎使用 Cmd Markdown 编辑阅读器">
+                <i class="fa fa-chevron-left"></i> 欢迎使用 Cmd Markdown 编辑阅读器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/19/Git学习笔记/" rel="prev" title="Git学习笔记">
+                Git学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/user.png"
+               alt="zgjx" />
+          <p class="site-author-name" itemprop="name">zgjx</p>
+           
+              <p class="site-description motion-element" itemprop="description">My blog</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zgjx6" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/780c677673ef" target="_blank" title="Jianshu">
+                  
+                    <i class="fa fa-fw fa-book"></i>
+                  
+                  Jianshu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python变量作用域"><span class="nav-number">1.</span> <span class="nav-text">Python变量作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#闭包的概念"><span class="nav-number">2.</span> <span class="nav-text">闭包的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#装饰器"><span class="nav-number">3.</span> <span class="nav-text">装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#装饰器的应用"><span class="nav-number">4.</span> <span class="nav-text">装饰器的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zgjx</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.1"></script>
+
+
+  
+
+</body>
+</html>
