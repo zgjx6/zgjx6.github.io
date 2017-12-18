@@ -91,17 +91,17 @@
 
 
 
-<meta name="description" content="引用:MongoDB 教程 - 菜鸟教程 概念解析   SQL术语/概念 MongoDB术语/概念 解释/说明     database database 数据库   table collection 数据库表/集合   row document 行/文档   column field 列(字段)/字段(域)   index index 索引   table joins 表连接,MongoDB不支">
+<meta name="description" content="引用:MongoDB 教程 - 菜鸟教程 安装MongoDB下载地址Mongodb安装教程 概念解析   SQL术语/概念 MongoDB术语/概念 解释/说明     database database 数据库   table collection 数据库表/集合   row document 行/文档   column field 列(字段)/字段(域)   index index 索引">
 <meta name="keywords" content="笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mongodb学习笔记">
 <meta property="og:url" content="http://yoursite.com/2017/07/05/Mongodb学习笔记/index.html">
 <meta property="og:site_name" content="zgjx的博客">
-<meta property="og:description" content="引用:MongoDB 教程 - 菜鸟教程 概念解析   SQL术语/概念 MongoDB术语/概念 解释/说明     database database 数据库   table collection 数据库表/集合   row document 行/文档   column field 列(字段)/字段(域)   index index 索引   table joins 表连接,MongoDB不支">
-<meta property="og:updated_time" content="2017-11-20T02:16:09.153Z">
+<meta property="og:description" content="引用:MongoDB 教程 - 菜鸟教程 安装MongoDB下载地址Mongodb安装教程 概念解析   SQL术语/概念 MongoDB术语/概念 解释/说明     database database 数据库   table collection 数据库表/集合   row document 行/文档   column field 列(字段)/字段(域)   index index 索引">
+<meta property="og:updated_time" content="2017-12-18T09:41:28.962Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mongodb学习笔记">
-<meta name="twitter:description" content="引用:MongoDB 教程 - 菜鸟教程 概念解析   SQL术语/概念 MongoDB术语/概念 解释/说明     database database 数据库   table collection 数据库表/集合   row document 行/文档   column field 列(字段)/字段(域)   index index 索引   table joins 表连接,MongoDB不支">
+<meta name="twitter:description" content="引用:MongoDB 教程 - 菜鸟教程 安装MongoDB下载地址Mongodb安装教程 概念解析   SQL术语/概念 MongoDB术语/概念 解释/说明     database database 数据库   table collection 数据库表/集合   row document 行/文档   column field 列(字段)/字段(域)   index index 索引">
 
 
 
@@ -362,6 +362,7 @@
 
       
         <p>引用:<br><a href="http://www.runoob.com/mongodb/mongodb-tutorial.html" target="_blank" rel="external">MongoDB 教程 - 菜鸟教程</a></p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p><a href="https://www.mongodb.com/download-center?jmp=nav#community" target="_blank" rel="external">MongoDB下载地址</a><br><a href="http://blog.csdn.net/mzbonnt/article/details/51461331" target="_blank" rel="external">Mongodb安装教程</a></p>
 <h4 id="概念解析"><a href="#概念解析" class="headerlink" title="概念解析"></a>概念解析</h4><table>
 <thead>
 <tr>
@@ -421,7 +422,37 @@
 <li>local: 这个数据永远不会被复制，可以用来存储限于本地单台服务器的任意集合</li>
 <li>config: 当Mongo用于分片设置时，config数据库在内部使用，用于保存分片的相关信息。</li>
 </ul>
-<h4 id="元数据"><a href="#元数据" class="headerlink" title="元数据"></a>元数据</h4><p>数据库的信息是存储在集合中。它们使用了系统的命名空间<br>|集合命名空间|描述|<br>|-|-|<br>|dbname.system.namespaces|列出所有名字空间。|<br>|dbname.system.indexes|列出所有索引。|<br>|dbname.system.profile|包含数据库概要(profile)信息。|<br>|dbname.system.users|列出所有可访问数据库的用户。|<br>|dbname.local.sources|包含复制对端（slave）的服务器信息和状态。|</p>
+<h4 id="元数据"><a href="#元数据" class="headerlink" title="元数据"></a>元数据</h4><p>数据库的信息是存储在集合中。它们使用了系统的命名空间</p>
+<table>
+<thead>
+<tr>
+<th>集合命名空间</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dbname.system.namespaces</td>
+<td>列出所有名字空间。</td>
+</tr>
+<tr>
+<td>dbname.system.indexes</td>
+<td>列出所有索引。</td>
+</tr>
+<tr>
+<td>dbname.system.profile</td>
+<td>包含数据库概要(profile)信息。</td>
+</tr>
+<tr>
+<td>dbname.system.users</td>
+<td>列出所有可访问数据库的用户。</td>
+</tr>
+<tr>
+<td>dbname.local.sources</td>
+<td>包含复制对端（slave）的服务器信息和状态。</td>
+</tr>
+</tbody>
+</table>
 <h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><table>
 <thead>
 <tr>
@@ -702,11 +733,123 @@
 </blockquote>
 <p>想要读取从 10 条记录后 100 条记录，相当于 sql 中limit (10,100):<code>db.COLLECTION_NAME.find().skip(10).limit(100)</code><br>当查询时同时使用sort,skip,limit，无论位置先后，最先执行顺序 sort再skip再limit。</p>
 <h4 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h4><p>在MongoDB中使用使用sort()方法对数据进行排序，sort()方法可以通过参数指定排序的字段，并使用 1 和 -1 来指定排序的方式，其中 1 为升序排列，而-1是用于降序排列。<br>sort()方法基本语法如下所示：<code>db.COLLECTION_NAME.find().sort({KEY:1})</code></p>
-<h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><p>索引通常能够极大的提高查询的效率，如果没有索引，MongoDB在读取数据时必须扫描集合中的每个文件并选取那些符合查询条件的记录。<br>这种扫描全集合的查询效率是非常低的，特别在处理大量的数据时，查询可以要花费几十秒甚至几分钟，这对网站的性能是非常致命的。<br>索引是特殊的数据结构，索引存储在一个易于遍历读取的数据集合中，索引是对数据库表中一列或多列的值进行排序的一种结构。<br>ensureIndex()方法基本语法格式如下所示：<code>db.COLLECTION_NAME.ensureIndex({KEY:1})</code>,语法中 Key 值为你要创建的索引字段，1为指定按升序创建索引，如果你想按降序来创建索引指定为-1即可。<br>ensureIndex() 方法中你也可以设置使用多个字段创建索引（关系型数据库中称作复合索引）。<br><code>db.col.ensureIndex({&quot;title&quot;:1,&quot;description&quot;:-1})</code><br>ensureIndex() 接收可选参数，可选参数列表如下：<br>|Parameter|Type|Description|<br>|-|-|-|<br>|background|Boolean|建索引过程会阻塞其它数据库操作，background可指定以后台方式创建索引，即增加 “background” 可选参数。 “background” 默认值为false。|<br>|unique|Boolean|建立的索引是否唯一。指定为true创建唯一索引。默认值为false.|<br>|name|string|索引的名称。如果未指定，MongoDB的通过连接索引的字段名和排序顺序生成一个索引名称。|<br>|dropDups|Boolean|在建立唯一索引时是否删除重复记录,指定 true 创建唯一索引。默认值为 false.|<br>|sparse|Boolean|对文档中不存在的字段数据不启用索引；这个参数需要特别注意，如果设置为true的话，在索引字段中不会查询出不包含对应字段的文档.。默认值为 false.|<br>|expireAfterSeconds|integer|指定一个以秒为单位的数值，完成 TTL设定，设定集合的生存时间。|<br>|v|index version|索引的版本号。默认的索引版本取决于mongod创建索引时运行的版本。|<br>|weights|document|索引权重值，数值在 1 到 99,999 之间，表示该索引相对于其他索引字段的得分权重。|<br>|default_language|string|对于文本索引，该参数决定了停用词及词干和词器的规则的列表。 默认为英语|<br>|language_override|string|对于文本索引，该参数指定了包含在文档中的字段名，语言覆盖默认的language，默认值为 language.|</p>
+<h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><p>索引通常能够极大的提高查询的效率，如果没有索引，MongoDB在读取数据时必须扫描集合中的每个文件并选取那些符合查询条件的记录。<br>这种扫描全集合的查询效率是非常低的，特别在处理大量的数据时，查询可以要花费几十秒甚至几分钟，这对网站的性能是非常致命的。<br>索引是特殊的数据结构，索引存储在一个易于遍历读取的数据集合中，索引是对数据库表中一列或多列的值进行排序的一种结构。<br>ensureIndex()方法基本语法格式如下所示：<code>db.COLLECTION_NAME.ensureIndex({KEY:1})</code>,语法中 Key 值为你要创建的索引字段，1为指定按升序创建索引，如果你想按降序来创建索引指定为-1即可。<br>ensureIndex() 方法中你也可以设置使用多个字段创建索引（关系型数据库中称作复合索引）。<br><code>db.col.ensureIndex({&quot;title&quot;:1,&quot;description&quot;:-1})</code><br>ensureIndex() 接收可选参数，可选参数列表如下：</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>background</td>
+<td>Boolean</td>
+<td>建索引过程会阻塞其它数据库操作，background可指定以后台方式创建索引，即增加 “background” 可选参数。 “background” 默认值为false。</td>
+</tr>
+<tr>
+<td>unique</td>
+<td>Boolean</td>
+<td>建立的索引是否唯一。指定为true创建唯一索引。默认值为false.</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>索引的名称。如果未指定，MongoDB的通过连接索引的字段名和排序顺序生成一个索引名称。</td>
+</tr>
+<tr>
+<td>dropDups</td>
+<td>Boolean</td>
+<td>在建立唯一索引时是否删除重复记录,指定 true 创建唯一索引。默认值为 false.</td>
+</tr>
+<tr>
+<td>sparse</td>
+<td>Boolean</td>
+<td>对文档中不存在的字段数据不启用索引；这个参数需要特别注意，如果设置为true的话，在索引字段中不会查询出不包含对应字段的文档.。默认值为 false.</td>
+</tr>
+<tr>
+<td>expireAfterSeconds</td>
+<td>integer</td>
+<td>指定一个以秒为单位的数值，完成 TTL设定，设定集合的生存时间。</td>
+</tr>
+<tr>
+<td>v</td>
+<td>index version</td>
+<td>索引的版本号。默认的索引版本取决于mongod创建索引时运行的版本。</td>
+</tr>
+<tr>
+<td>weights</td>
+<td>document</td>
+<td>索引权重值，数值在 1 到 99,999 之间，表示该索引相对于其他索引字段的得分权重。</td>
+</tr>
+<tr>
+<td>default_language</td>
+<td>string</td>
+<td>对于文本索引，该参数决定了停用词及词干和词器的规则的列表。 默认为英语</td>
+</tr>
+<tr>
+<td>language_override</td>
+<td>string</td>
+<td>对于文本索引，该参数指定了包含在文档中的字段名，语言覆盖默认的language，默认值为 language.</td>
+</tr>
+</tbody>
+</table>
 <blockquote>
 <p>附：<a href="http://www.cnblogs.com/stephen-liu74/archive/2012/08/01/2561557.html" target="_blank" rel="external">MongoDB学习笔记(索引)</a></p>
 </blockquote>
-<h4 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h4><p>MongoDB中聚合(aggregate)主要用于处理数据(诸如统计平均值,求和等)，并返回计算后的数据结果。有点类似sql语句中的 count(*)。<br>aggregate() 方法的基本语法格式如下所示：<code>db.COLLECTION_NAME.aggregate(AGGREGATE_OPERATION)</code><br>下表展示了一些聚合的表达式:<br>|表达式|描述|实例|<br>|-|-|-|<br>|$sum|计算总和。|db.mycol.aggregate([{$group : {_id : “$by_user”, num_tutorial : {$sum : “$likes”}}}])|<br>|$avg|计算平均值|db.mycol.aggregate([{$group : {_id : “$by_user”, num_tutorial : {$avg : “$likes”}}}])|<br>|$min|获取集合中所有文档对应值得最小值。|db.mycol.aggregate([{$group : {_id : “$by_user”, num_tutorial : {$min : “$likes”}}}])|<br>|$max|获取集合中所有文档对应值得最大值。|db.mycol.aggregate([{$group : {_id : “$by_user”, num_tutorial : {$max : “$likes”}}}])|<br>|$push|在结果文档中插入值到一个数组中。|db.mycol.aggregate([{$group : {_id : “$by_user”, url : {$push: “$url”}}}])|<br>|$addToSet|在结果文档中插入值到一个数组中，但不创建副本。|db.mycol.aggregate([{$group : {_id : “$by_user”, url : {$addToSet : “$url”}}}])|<br>|$first|根据资源文档的排序获取第一个文档数据。|db.mycol.aggregate([{$group : {_id : “$by_user”, first_url : {$first : “$url”}}}])|<br>|$last|根据资源文档的排序获取最后一个文档数据|db.mycol.aggregate([{$group : {_id : “$by_user”, last_url : {$last : “$url”}}}])|</p>
+<h4 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h4><p>MongoDB中聚合(aggregate)主要用于处理数据(诸如统计平均值,求和等)，并返回计算后的数据结果。有点类似sql语句中的 count(*)。<br>aggregate() 方法的基本语法格式如下所示：<code>db.COLLECTION_NAME.aggregate(AGGREGATE_OPERATION)</code><br>下表展示了一些聚合的表达式:</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$sum</td>
+<td>计算总和。</td>
+<td>db.mycol.aggregate([{$group : {_id : “$by_user”, num_tutorial : {$sum : “$likes”}}}])</td>
+</tr>
+<tr>
+<td>$avg</td>
+<td>计算平均值</td>
+<td>db.mycol.aggregate([{$group : {_id : “$by_user”, num_tutorial : {$avg : “$likes”}}}])</td>
+</tr>
+<tr>
+<td>$min</td>
+<td>获取集合中所有文档对应值得最小值。</td>
+<td>db.mycol.aggregate([{$group : {_id : “$by_user”, num_tutorial : {$min : “$likes”}}}])</td>
+</tr>
+<tr>
+<td>$max</td>
+<td>获取集合中所有文档对应值得最大值。</td>
+<td>db.mycol.aggregate([{$group : {_id : “$by_user”, num_tutorial : {$max : “$likes”}}}])</td>
+</tr>
+<tr>
+<td>$push</td>
+<td>在结果文档中插入值到一个数组中。</td>
+<td>db.mycol.aggregate([{$group : {_id : “$by_user”, url : {$push: “$url”}}}])</td>
+</tr>
+<tr>
+<td>$addToSet</td>
+<td>在结果文档中插入值到一个数组中，但不创建副本。</td>
+<td>db.mycol.aggregate([{$group : {_id : “$by_user”, url : {$addToSet : “$url”}}}])</td>
+</tr>
+<tr>
+<td>$first</td>
+<td>根据资源文档的排序获取第一个文档数据。</td>
+<td>db.mycol.aggregate([{$group : {_id : “$by_user”, first_url : {$first : “$url”}}}])</td>
+</tr>
+<tr>
+<td>$last</td>
+<td>根据资源文档的排序获取最后一个文档数据</td>
+<td>db.mycol.aggregate([{$group : {_id : “$by_user”, last_url : {$last : “$url”}}}])</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
@@ -749,8 +892,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/05/Metasploit学习笔记/" rel="next" title="Metasploit学习笔记">
-                <i class="fa fa-chevron-left"></i> Metasploit学习笔记
+              <a href="/2017/07/05/社会工程学/" rel="next" title="社会工程学学习笔记">
+                <i class="fa fa-chevron-left"></i> 社会工程学学习笔记
               </a>
             
           </div>
@@ -759,8 +902,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/05/社会工程学/" rel="prev" title="社会工程学学习笔记">
-                社会工程学学习笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/14/攻击远程主机的步骤/" rel="prev" title="攻击远程主机的步骤">
+                攻击远程主机的步骤 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -910,7 +1053,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#概念解析"><span class="nav-number">1.</span> <span class="nav-text">概念解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据库"><span class="nav-number">2.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#元数据"><span class="nav-number">3.</span> <span class="nav-text">元数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据类型"><span class="nav-number">4.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除"><span class="nav-number">5.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入"><span class="nav-number">6.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新"><span class="nav-number">7.</span> <span class="nav-text">更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除-1"><span class="nav-number">8.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询"><span class="nav-number">9.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件操作符"><span class="nav-number">10.</span> <span class="nav-text">条件操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#type-操作符"><span class="nav-number">11.</span> <span class="nav-text">$type 操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Limit与Skip方法"><span class="nav-number">12.</span> <span class="nav-text">Limit与Skip方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排序"><span class="nav-number">13.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引"><span class="nav-number">14.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#聚合"><span class="nav-number">15.</span> <span class="nav-text">聚合</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#概念解析"><span class="nav-number">2.</span> <span class="nav-text">概念解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据库"><span class="nav-number">3.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#元数据"><span class="nav-number">4.</span> <span class="nav-text">元数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据类型"><span class="nav-number">5.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除"><span class="nav-number">6.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入"><span class="nav-number">7.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新"><span class="nav-number">8.</span> <span class="nav-text">更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除-1"><span class="nav-number">9.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询"><span class="nav-number">10.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件操作符"><span class="nav-number">11.</span> <span class="nav-text">条件操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#type-操作符"><span class="nav-number">12.</span> <span class="nav-text">$type 操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Limit与Skip方法"><span class="nav-number">13.</span> <span class="nav-text">Limit与Skip方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排序"><span class="nav-number">14.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引"><span class="nav-number">15.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#聚合"><span class="nav-number">16.</span> <span class="nav-text">聚合</span></a></li></ol></div>
             
 
           </div>
