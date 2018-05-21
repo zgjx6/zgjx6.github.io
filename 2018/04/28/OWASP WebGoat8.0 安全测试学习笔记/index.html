@@ -1,0 +1,798 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Microsoft YaHei:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="笔记," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Authentication  FlawsAuthentication Bypasseslesson2答案：将请求中的参数secQuestion0和secQuestion1分别改名为secQuestion2和secQuestion3即可 本题给的案例中是直接把参数给删掉，但提示中说本题有何案例略有不同。然后可以看到这两个参数名是相似的，可以猜想后端可能校验了参数个数，但对参数名的校验上可能存在问题">
+<meta name="keywords" content="笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OWASP WebGoat8.0 安全测试学习笔记">
+<meta property="og:url" content="http://yoursite.com/2018/04/28/OWASP WebGoat8.0 安全测试学习笔记/index.html">
+<meta property="og:site_name" content="zgjx的博客">
+<meta property="og:description" content="Authentication  FlawsAuthentication Bypasseslesson2答案：将请求中的参数secQuestion0和secQuestion1分别改名为secQuestion2和secQuestion3即可 本题给的案例中是直接把参数给删掉，但提示中说本题有何案例略有不同。然后可以看到这两个参数名是相似的，可以猜想后端可能校验了参数个数，但对参数名的校验上可能存在问题">
+<meta property="og:image" content="http://yoursite.com/2018/04/28/OWASP%20WebGoat8.0%20安全测试学习笔记/imgs/xss1.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/28/OWASP%20WebGoat8.0%20安全测试学习笔记/imgs/xss2.png">
+<meta property="og:updated_time" content="2018-05-04T08:04:47.022Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OWASP WebGoat8.0 安全测试学习笔记">
+<meta name="twitter:description" content="Authentication  FlawsAuthentication Bypasseslesson2答案：将请求中的参数secQuestion0和secQuestion1分别改名为secQuestion2和secQuestion3即可 本题给的案例中是直接把参数给删掉，但提示中说本题有何案例略有不同。然后可以看到这两个参数名是相似的，可以猜想后端可能校验了参数个数，但对参数名的校验上可能存在问题">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/28/OWASP%20WebGoat8.0%20安全测试学习笔记/imgs/xss1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/28/OWASP WebGoat8.0 安全测试学习笔记/"/>
+
+
+
+
+
+  <title>OWASP WebGoat8.0 安全测试学习笔记 | zgjx的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zgjx的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">....-/.----/-..../...--/--.../...--/--.../....-/---../.----/----./....-/----./..---/----./...--/----./.----</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/28/OWASP WebGoat8.0 安全测试学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zgjx">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/user.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zgjx的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OWASP WebGoat8.0 安全测试学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-28T10:49:57+08:00">
+                2018-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Authentication-Flaws"><a href="#Authentication-Flaws" class="headerlink" title="Authentication  Flaws"></a>Authentication  Flaws</h2><h4 id="Authentication-Bypasses"><a href="#Authentication-Bypasses" class="headerlink" title="Authentication Bypasses"></a>Authentication Bypasses</h4><h5 id="lesson2"><a href="#lesson2" class="headerlink" title="lesson2"></a>lesson2</h5><p>答案：将请求中的参数<code>secQuestion0</code>和<code>secQuestion1</code>分别改名为<code>secQuestion2</code>和<code>secQuestion3</code>即可</p>
+<p>本题给的案例中是直接把参数给删掉，但提示中说本题有何案例略有不同。然后可以看到这两个参数名是相似的，可以猜想后端可能校验了参数个数，但对参数名的校验上可能存在问题，所以本题修改参数名即可。</p>
+<h2 id="Cross-Site-Scripting-XSS"><a href="#Cross-Site-Scripting-XSS" class="headerlink" title="Cross Site Scripting(XSS)"></a>Cross Site Scripting(XSS)</h2><h4 id="Cross-Site-Scripting"><a href="#Cross-Site-Scripting" class="headerlink" title="Cross Site Scripting"></a>Cross Site Scripting</h4><h5 id="lesson2-1"><a href="#lesson2-1" class="headerlink" title="lesson2"></a>lesson2</h5><p>答案：<code>yes</code></p>
+<p>本题让在浏览器中新打开一个标签页，输入并访问本站任意的网址（如本题的网址<a href="http://127.0.0.1:8080/WebGoat/start.mvc#lesson/CrossSiteScripting.lesson/1），然后在地址栏输入`javascript:alert(document.cookie);`，如果是复制粘贴的话，浏览器可能会自动删掉前面的`javascript:`，需要手动加上，执行后会弹出本站的cookies。" target="_blank" rel="external">http://127.0.0.1:8080/WebGoat/start.mvc#lesson/CrossSiteScripting.lesson/1），然后在地址栏输入`javascript:alert(document.cookie);`，如果是复制粘贴的话，浏览器可能会自动删掉前面的`javascript:`，需要手动加上，执行后会弹出本站的cookies。</a><br><img src="./imgs/xss1.png" alt="image"><br>本题问题是问各标签页的cookies是否相同，由于都是一个站的，那肯定是肯定是相同的，所以答案就是<code>yes</code>。</p>
+<h5 id="lesson7"><a href="#lesson7" class="headerlink" title="lesson7"></a>lesson7</h5><p>答案：<code>&lt;script&gt;alert(&#39;my javascript here&#39;)&lt;/script&gt;</code></p>
+<p>本题似乎有点问题，直接点<code>Purchase</code>后题目就绿了，但查看响应并没有算作通过。输入<code>&lt;script&gt;alert(&#39;my javascript here&#39;)&lt;/script&gt;</code>可以看到响应中<code>&quot;lessonCompleted&quot; : true</code>。但并没有成功触发xss，原因在lesson8中有详细的说明，继续下一题。<br><img src="./imgs/xss2.png" alt="image">  </p>
+<h5 id="lesson10"><a href="#lesson10" class="headerlink" title="lesson10"></a>lesson10</h5><p>答案：<code>start.mvc#test/</code></p>
+<p>本题提示说<code>/WebGoat/start.mvc#lesson/CrossSiteScripting.lesson/5</code>的route是<code>start.mvc#lesson/</code>，然后问<code>test code</code>的route是什么。随便输入一个答案可以看到提示，检查<code>GoatRouter.js</code>。在<code>GoatRouter.js</code>中可以发现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">routes: &#123;</div><div class="line">    &apos;welcome&apos;: &apos;welcomeRoute&apos;,</div><div class="line">    &apos;lesson/:name&apos;: &apos;lessonRoute&apos;,</div><div class="line">    &apos;lesson/:name/:pageNum&apos;: &apos;lessonPageRoute&apos;,</div><div class="line">    &apos;test/:param&apos;: &apos;testRoute&apos;,</div><div class="line">    &apos;reportCard&apos;: &apos;reportCard&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>所以答案就是<code>start.mvc#test/</code>。</p>
+<h5 id="lesson11"><a href="#lesson11" class="headerlink" title="lesson11"></a>lesson11</h5><p>答案：本题答案是一个随机数</p>
+<p>接上一题，在<code>GoatRouter.js</code>可以看到如下函数，该函数会发送一个请求，然后会随机返回一个data，提交这个data就可以通关了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">webgoat.customjs.phoneHome = function (e) &#123;</div><div class="line">    console.log(&apos;phoneHome invoked&apos;);</div><div class="line">    webgoat.customjs.jquery.ajax(&#123;</div><div class="line">        method: &quot;POST&quot;,</div><div class="line">        url: &quot;/WebGoat/CrossSiteScripting/phone-home-xss&quot;,</div><div class="line">        data: &#123;param1: 42, param2: 24&#125;,</div><div class="line">        headers: &#123;</div><div class="line">            &quot;webgoat-requested-by&quot;: &quot;dom-xss-vuln&quot;</div><div class="line">        &#125;,</div><div class="line">        contentType: &apos;application/x-www-form-urlencoded; charset=UTF-8&apos;,</div><div class="line">        success: function (data) &#123;</div><div class="line">            //devs leave stuff like this in all the time</div><div class="line">            console.log(&apos;phone home said &apos;  + data);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>直接在浏览器控制台中执行webgoat.customjs.phoneHome()，再在Network中查看该请求，会有类似的返回：<code>&quot;output&quot; : &quot;phoneHome Response is 609023750&quot;</code>，提交其中的数字即可。</p>
+<h5 id="lesson13"><a href="#lesson13" class="headerlink" title="lesson13"></a>lesson13</h5><p>答案：本题答案是一个随机数</p>
+<p>评论区有一个提示<code>Can you post a comment, calling webgoat.customjs.phoneHome() ?</code>，意思是要在xss的payload中执行这个函数，所以添加一个评论<code>&lt;script&gt;webgoat.customjs.phoneHome()&lt;/script&gt;</code>，后续步骤同上一题。</p>
+<h2 id="Access-Control-Flaws"><a href="#Access-Control-Flaws" class="headerlink" title="Access Control Flaws"></a>Access Control Flaws</h2><h4 id="Insecure-Direct-Object-References"><a href="#Insecure-Direct-Object-References" class="headerlink" title="Insecure Direct Object References"></a>Insecure Direct Object References</h4><h5 id="lesson2-2"><a href="#lesson2-2" class="headerlink" title="lesson2"></a>lesson2</h5><p>输入tom/cat，提交即可</p>
+<h5 id="lesson3"><a href="#lesson3" class="headerlink" title="lesson3"></a>lesson3</h5><p>答案：<code>role,userId</code></p>
+<p>题目问<code>profile</code>中有两个属性没有显示出来，所以点击<code>profile</code>按钮，查看f12中Network中的请求，可以看到如下响应:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;role&quot; : 3,</div><div class="line">  &quot;color&quot; : &quot;yellow&quot;,</div><div class="line">  &quot;size&quot; : &quot;small&quot;,</div><div class="line">  &quot;name&quot; : &quot;Tom Cat&quot;,</div><div class="line">  &quot;userId&quot; : &quot;2342384&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>所以本题答案就是<code>role,userId</code>。</p>
+<h5 id="lesson4"><a href="#lesson4" class="headerlink" title="lesson4"></a>lesson4</h5><p>答案：<code>WebGoat/IDOR/profile/2342384</code>，后面的数字是上一题的userId</p>
+<p>本题提示中提到RESTful，加上上题的隐藏的userId，可以猜到url应该是在之前<code>profile</code>的url后跟上userId。</p>
+<h5 id="lesson5"><a href="#lesson5" class="headerlink" title="lesson5"></a>lesson5</h5><p>查看他人profile需要知道他人的ID，这里只能猜，继续往上猜几次就能发现<code>2342388</code>就是另一个用户的ID。</p>
+<p>修改他人profile，提示中有说明需要修改HTTP方法和body，而在RESTful中，一般使用PUT修改数据（在lesson6中也有提示），所以构造如下请求（注意需要修改其中的url和Cookie），其中的role和color都需要按照要求修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">PUT http://127.0.0.1:8080/WebGoat/IDOR/profile/2342388 HTTP/1.1</div><div class="line">Cache-Control: max-age=0</div><div class="line">Accept: application/json</div><div class="line">Accept-Encoding: gzip, deflate</div><div class="line">Accept-Language: zh-CN,zh;q=0.9</div><div class="line">Connection: keep-alive</div><div class="line">Cookie: JSESSIONID=CE8C7F19F2462AC70DA9ECFCBBDAB3AF</div><div class="line">Host: 127.0.0.1:8080</div><div class="line">Upgrade-Insecure-Requests: 1</div><div class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36</div><div class="line">Content-Type: application/json</div><div class="line">content-length: 84</div><div class="line"></div><div class="line">&#123;&quot;role&quot;:&quot;1&quot;, &quot;color&quot;:&quot;red&quot;, &quot;size&quot;:&quot;large&quot;, &quot;name&quot;:&quot;Buffalo Bill&quot;, &quot;userId&quot;:2342388&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="Missing-Function-Level-Access-Control"><a href="#Missing-Function-Level-Access-Control" class="headerlink" title="Missing Function Level Access Control"></a>Missing Function Level Access Control</h4><h5 id="lesson2-3"><a href="#lesson2-3" class="headerlink" title="lesson2"></a>lesson2</h5><p>答案：Users,Config</p>
+<p>本题让寻找隐藏的字段，所以打开f12，可以发现如下节点：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;ul&gt;</div><div class="line">    &lt;li&gt;&lt;a href=&quot;/users&quot;&gt;Users&lt;/a&gt;&lt;/li&gt;</div><div class="line">    &lt;li&gt;&lt;a href=&quot;/config&quot;&gt;Config&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;/ul&gt;</div></pre></td></tr></table></figure></p>
+<p>所以答案就是Users,Config。</p>
+<h5 id="lesson3-1"><a href="#lesson3-1" class="headerlink" title="lesson3"></a>lesson3</h5><p>这题让找hash，根据提示上一题的隐藏链接可能有用，直接访问<code>http://172.26.40.161:8001/WebGoat/users</code>将会被误导，而<code>http://172.26.40.161:8001/WebGoat/config</code>则不可访问，这里的坑在于访问users必须要用<code>json</code>格式，所以构造如下请求（需要修改其中的url和Cookie,其中Content-Type必须为application/json）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">GET http://127.0.0.1:8080/WebGoat/users HTTP/1.1</div><div class="line">Cache-Control: max-age=0</div><div class="line">Accept: application/json</div><div class="line">Accept-Encoding: gzip, deflate</div><div class="line">Accept-Language: zh-CN,zh;q=0.9</div><div class="line">Connection: keep-alive</div><div class="line">Cookie: JSESSIONID=0667819BCA256DAE9F6C3B13BF6AB901</div><div class="line">Host: 127.0.0.1:8080</div><div class="line">Upgrade-Insecure-Requests: 1</div><div class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36</div><div class="line">Content-Type: application/json</div></pre></td></tr></table></figure></p>
+<p>提交返回值中的userHash即可。</p>
+<h2 id="Insecure-Communication"><a href="#Insecure-Communication" class="headerlink" title="Insecure Communication"></a>Insecure Communication</h2><h4 id="Insecure-Login"><a href="#Insecure-Login" class="headerlink" title="Insecure Login"></a>Insecure Login</h4><h5 id="lesson2-4"><a href="#lesson2-4" class="headerlink" title="lesson2"></a>lesson2</h5><p>答案：CaptainJack,BlackPearl</p>
+<p>先打开浏览器f12，点击login查看请求，账号密码就在请求中，输入下面的输入框中即可。</p>
+<h2 id="Request-Forgeries"><a href="#Request-Forgeries" class="headerlink" title="Request Forgeries"></a>Request Forgeries</h2><h4 id="Cross-Site-Request-Forgeries"><a href="#Cross-Site-Request-Forgeries" class="headerlink" title="Cross-Site Request Forgeries"></a>Cross-Site Request Forgeries</h4><h5 id="lesson3-2"><a href="#lesson3-2" class="headerlink" title="lesson3"></a>lesson3</h5><p>点击提交按钮，拦截请求，修改<code>Referer</code>为其他地址即可得到flag。</p>
+<h5 id="lesson4-1"><a href="#lesson4-1" class="headerlink" title="lesson4"></a>lesson4</h5><p>基本同上，点击<code>Submit review</code>，拦截请求，修改<code>Referer</code>为其他地址即可。</p>
+<h5 id="lesson7-1"><a href="#lesson7-1" class="headerlink" title="lesson7"></a>lesson7</h5><p>本题同样需要修改<code>Referer</code>,并修改<code>Content-Type</code>为<code>text/plain</code>，可构造如下请求（需要修改其中的url和Cookie,其中Content-Type必须为text/plain）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">POST http://127.0.0.1:8080/WebGoat/csrf/feedback/message HTTP/1.1</div><div class="line">Host: 127.0.0.1:8080</div><div class="line">Connection: keep-alive</div><div class="line">Content-Length: 92</div><div class="line">Cache-Control: max-age=0</div><div class="line">Upgrade-Insecure-Requests: 1</div><div class="line">Origin: http://127.0.0.1:8080</div><div class="line">Content-Type: text/plain</div><div class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36</div><div class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8</div><div class="line">Accept-Encoding: gzip, deflate</div><div class="line">Accept-Language: zh-CN,zh;q=0.9</div><div class="line">Cookie: JSESSIONID=0667819BCA256DAE9F6C3B13BF6AB901</div><div class="line"></div><div class="line">&#123;&quot;name&quot;: &quot;Test&quot;, &quot;email&quot;: &quot;test1233@dfssdf.de&quot;, &quot;subject&quot;: &quot;service&quot;, &quot;message&quot;:&quot;dsaffd&quot;&#125;</div></pre></td></tr></table></figure></p>
+<p>查看返回值可获得flag。</p>
+<h5 id="lesson8"><a href="#lesson8" class="headerlink" title="lesson8"></a>lesson8</h5><p>不太明白这一题。<br>新创建一个账户，用户名为<code>csrf-现在的用户名</code>，用这个新用户登录后点击<code>Solved</code>即可。</p>
+<h2 id="Vulnerable-Components-A9"><a href="#Vulnerable-Components-A9" class="headerlink" title="Vulnerable Components - A9"></a>Vulnerable Components - A9</h2><h4 id="Vulnerable-Components"><a href="#Vulnerable-Components" class="headerlink" title="Vulnerable Components"></a>Vulnerable Components</h4><h5 id="lesson5-1"><a href="#lesson5-1" class="headerlink" title="lesson5"></a>lesson5</h5><p>答案：<script>alert(1)</script></p>
+<h5 id="lesson12"><a href="#lesson12" class="headerlink" title="lesson12"></a>lesson12</h5><p>答案：<code>&lt;contact&gt;&lt;/contact&gt;</code>。</p>
+<p>不会做这题，也没搜到答案，随便蒙了一个，虽然算是完成了，但感觉上不对。</p>
+<h2 id="Client-side"><a href="#Client-side" class="headerlink" title="Client side"></a>Client side</h2><h4 id="Client-side-filtering"><a href="#Client-side-filtering" class="headerlink" title="Client side filtering"></a>Client side filtering</h4><h5 id="lesson2-5"><a href="#lesson2-5" class="headerlink" title="lesson2"></a>lesson2</h5><p>答案：45000。</p>
+<p>随便选择一个人查看其信息，服务器返回结果中包含了所有人的信息。</p>
+<h4 id="Bypass-front-end-restrictions"><a href="#Bypass-front-end-restrictions" class="headerlink" title="Bypass front-end restrictions"></a>Bypass front-end restrictions</h4><h5 id="lesson2-6"><a href="#lesson2-6" class="headerlink" title="lesson2"></a>lesson2</h5><p>答案：修改form表单所有参数的值即可。</p>
+<h5 id="lesson3-3"><a href="#lesson3-3" class="headerlink" title="lesson3"></a>lesson3</h5><p>在f12的console中执行<code>validate=function(){return true}</code>，然后修改参数提交。</p>
+<h4 id="HTML-tampering"><a href="#HTML-tampering" class="headerlink" title="HTML tampering"></a>HTML tampering</h4><h5 id="lesson2-7"><a href="#lesson2-7" class="headerlink" title="lesson2"></a>lesson2</h5><p>答案：找到隐藏的name=Total的input输入框，修改总价。</p>
+<h2 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h2><h4 id="Admin-lost-password"><a href="#Admin-lost-password" class="headerlink" title="Admin lost password"></a>Admin lost password</h4>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/12/SQL注入学习笔记/" rel="next" title="SQL注入学习笔记">
+                <i class="fa fa-chevron-left"></i> SQL注入学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/11/Web安全测试常见测试点/" rel="prev" title="Web安全测试常见测试点">
+                Web安全测试常见测试点 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/user.png"
+               alt="zgjx" />
+          <p class="site-author-name" itemprop="name">zgjx</p>
+           
+              <p class="site-description motion-element" itemprop="description">My blog</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zgjx6" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/780c677673ef" target="_blank" title="Jianshu">
+                  
+                    <i class="fa fa-fw fa-book"></i>
+                  
+                  Jianshu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Authentication-Flaws"><span class="nav-number">1.</span> <span class="nav-text">Authentication  Flaws</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Authentication-Bypasses"><span class="nav-number">1.0.1.</span> <span class="nav-text">Authentication Bypasses</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson2"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">lesson2</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cross-Site-Scripting-XSS"><span class="nav-number">2.</span> <span class="nav-text">Cross Site Scripting(XSS)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cross-Site-Scripting"><span class="nav-number">2.0.1.</span> <span class="nav-text">Cross Site Scripting</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson2-1"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">lesson2</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson7"><span class="nav-number">2.0.1.2.</span> <span class="nav-text">lesson7</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson10"><span class="nav-number">2.0.1.3.</span> <span class="nav-text">lesson10</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson11"><span class="nav-number">2.0.1.4.</span> <span class="nav-text">lesson11</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson13"><span class="nav-number">2.0.1.5.</span> <span class="nav-text">lesson13</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Access-Control-Flaws"><span class="nav-number">3.</span> <span class="nav-text">Access Control Flaws</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Insecure-Direct-Object-References"><span class="nav-number">3.0.1.</span> <span class="nav-text">Insecure Direct Object References</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson2-2"><span class="nav-number">3.0.1.1.</span> <span class="nav-text">lesson2</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson3"><span class="nav-number">3.0.1.2.</span> <span class="nav-text">lesson3</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson4"><span class="nav-number">3.0.1.3.</span> <span class="nav-text">lesson4</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson5"><span class="nav-number">3.0.1.4.</span> <span class="nav-text">lesson5</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Missing-Function-Level-Access-Control"><span class="nav-number">3.0.2.</span> <span class="nav-text">Missing Function Level Access Control</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson2-3"><span class="nav-number">3.0.2.1.</span> <span class="nav-text">lesson2</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson3-1"><span class="nav-number">3.0.2.2.</span> <span class="nav-text">lesson3</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Insecure-Communication"><span class="nav-number">4.</span> <span class="nav-text">Insecure Communication</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Insecure-Login"><span class="nav-number">4.0.1.</span> <span class="nav-text">Insecure Login</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson2-4"><span class="nav-number">4.0.1.1.</span> <span class="nav-text">lesson2</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Request-Forgeries"><span class="nav-number">5.</span> <span class="nav-text">Request Forgeries</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cross-Site-Request-Forgeries"><span class="nav-number">5.0.1.</span> <span class="nav-text">Cross-Site Request Forgeries</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson3-2"><span class="nav-number">5.0.1.1.</span> <span class="nav-text">lesson3</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson4-1"><span class="nav-number">5.0.1.2.</span> <span class="nav-text">lesson4</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson7-1"><span class="nav-number">5.0.1.3.</span> <span class="nav-text">lesson7</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson8"><span class="nav-number">5.0.1.4.</span> <span class="nav-text">lesson8</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vulnerable-Components-A9"><span class="nav-number">6.</span> <span class="nav-text">Vulnerable Components - A9</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Vulnerable-Components"><span class="nav-number">6.0.1.</span> <span class="nav-text">Vulnerable Components</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson5-1"><span class="nav-number">6.0.1.1.</span> <span class="nav-text">lesson5</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson12"><span class="nav-number">6.0.1.2.</span> <span class="nav-text">lesson12</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Client-side"><span class="nav-number">7.</span> <span class="nav-text">Client side</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Client-side-filtering"><span class="nav-number">7.0.1.</span> <span class="nav-text">Client side filtering</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson2-5"><span class="nav-number">7.0.1.1.</span> <span class="nav-text">lesson2</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bypass-front-end-restrictions"><span class="nav-number">7.0.2.</span> <span class="nav-text">Bypass front-end restrictions</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson2-6"><span class="nav-number">7.0.2.1.</span> <span class="nav-text">lesson2</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson3-3"><span class="nav-number">7.0.2.2.</span> <span class="nav-text">lesson3</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTML-tampering"><span class="nav-number">7.0.3.</span> <span class="nav-text">HTML tampering</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#lesson2-7"><span class="nav-number">7.0.3.1.</span> <span class="nav-text">lesson2</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Challenges"><span class="nav-number">8.</span> <span class="nav-text">Challenges</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Admin-lost-password"><span class="nav-number">8.0.1.</span> <span class="nav-text">Admin lost password</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zgjx</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.1"></script>
+
+
+  
+
+</body>
+</html>

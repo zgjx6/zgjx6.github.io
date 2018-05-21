@@ -98,7 +98,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/07/04/Nmap学习笔记/index.html">
 <meta property="og:site_name" content="zgjx的博客">
 <meta property="og:description" content="学习nmap过程中的一些笔记">
-<meta property="og:updated_time" content="2018-03-02T01:18:44.147Z">
+<meta property="og:updated_time" content="2018-05-18T07:39:19.292Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nmap学习笔记">
 <meta name="twitter:description" content="学习nmap过程中的一些笔记">
@@ -385,6 +385,13 @@
 <li><code>vuln</code>: 负责检查目标机是否有常见的漏洞（Vulnerability）</li>
 </ul>
 </blockquote>
+<h3 id="最好的-NMAP-扫描策略"><a href="#最好的-NMAP-扫描策略" class="headerlink" title="最好的 NMAP 扫描策略"></a>最好的 NMAP 扫描策略</h3><h5 id="适用所有大小网络最好的-nmap-扫描策略"><a href="#适用所有大小网络最好的-nmap-扫描策略" class="headerlink" title="适用所有大小网络最好的 nmap 扫描策略"></a>适用所有大小网络最好的 nmap 扫描策略</h5><h5 id="主机发现，生成存活主机列表"><a href="#主机发现，生成存活主机列表" class="headerlink" title="主机发现，生成存活主机列表"></a>主机发现，生成存活主机列表</h5><p><code>$ nmap -sn -T4 -oG Discovery.gnmap 192.168.56.0/24</code><br><code>$ grep &quot;Status: Up&quot; Discovery.gnmap | cut -f 2 -d &#39; &#39; &gt; LiveHosts.txt</code></p>
+<h5 id="端口发现，发现大部分常用端口"><a href="#端口发现，发现大部分常用端口" class="headerlink" title="端口发现，发现大部分常用端口"></a>端口发现，发现大部分常用端口</h5><p><a href="http://nmap.org/presentations/BHDC08/bhdc08-slides-fyodor.pdf" target="_blank" rel="external">http://nmap.org/presentations/BHDC08/bhdc08-slides-fyodor.pdf</a><br><code>$ nmap -sS -T4 -Pn -oG TopTCP -iL LiveHosts.txt</code><br><code>$ nmap -sU -T4 -Pn -oN TopUDP -iL LiveHosts.txt</code><br><code>$ nmap -sS -T4 -Pn --top-ports 3674 -oG 3674 -iL LiveHosts.txt</code></p>
+<h5 id="端口发现，发现全部端口，但-UDP-端口的扫描会非常慢"><a href="#端口发现，发现全部端口，但-UDP-端口的扫描会非常慢" class="headerlink" title="端口发现，发现全部端口，但 UDP 端口的扫描会非常慢"></a>端口发现，发现全部端口，但 UDP 端口的扫描会非常慢</h5><p><code>$ nmap -sS -T4 -Pn -p 0-65535 -oN FullTCP -iL LiveHosts.txt</code><br><code>$ nmap -sU -T4 -Pn -p 0-65535 -oN FullUDP -iL LiveHosts.txt</code></p>
+<h5 id="显示-TCP-UDP-端口"><a href="#显示-TCP-UDP-端口" class="headerlink" title="显示 TCP\UDP 端口"></a>显示 TCP\UDP 端口</h5><p><code>$ grep &quot;open&quot; FullTCP|cut -f 1 -d &#39; &#39; | sort -nu | cut -f 1 -d &#39;/&#39; |xargs | sed &#39;s/ /,/g&#39;|awk &#39;{print &quot;T:&quot;$0}&#39;</code><br><code>$ grep &quot;open&quot; FullUDP|cut -f 1 -d &#39; &#39; | sort -nu | cut -f 1 -d &#39;/&#39; |xargs | sed &#39;s/ /,/g&#39;|awk &#39;{print &quot;U:&quot;$0}&#39;</code></p>
+<h5 id="侦测服务版本"><a href="#侦测服务版本" class="headerlink" title="侦测服务版本"></a>侦测服务版本</h5><p><code>$ nmap -sV -T4 -Pn -oG ServiceDetect -iL LiveHosts.txt</code></p>
+<h5 id="扫做系统扫描"><a href="#扫做系统扫描" class="headerlink" title="扫做系统扫描"></a>扫做系统扫描</h5><p><code>$ nmap -O -T4 -Pn -oG OSDetect -iL LiveHosts.txt</code></p>
+<h5 id="系统和服务检测"><a href="#系统和服务检测" class="headerlink" title="系统和服务检测"></a>系统和服务检测</h5><p><code>$ nmap -O -sV -T4 -Pn -p U:53,111,137,T:21-25,80,139,8080 -oG OS_Service_Detect -iL LiveHosts.txt</code></p>
 
       
     </div>
@@ -511,7 +518,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -588,7 +595,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#端口"><span class="nav-number">1.</span> <span class="nav-text">端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞"><span class="nav-number">2.</span> <span class="nav-text">漏洞</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#端口"><span class="nav-number">1.</span> <span class="nav-text">端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞"><span class="nav-number">2.</span> <span class="nav-text">漏洞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最好的-NMAP-扫描策略"><span class="nav-number">3.</span> <span class="nav-text">最好的 NMAP 扫描策略</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#适用所有大小网络最好的-nmap-扫描策略"><span class="nav-number">3.0.1.</span> <span class="nav-text">适用所有大小网络最好的 nmap 扫描策略</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#主机发现，生成存活主机列表"><span class="nav-number">3.0.2.</span> <span class="nav-text">主机发现，生成存活主机列表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#端口发现，发现大部分常用端口"><span class="nav-number">3.0.3.</span> <span class="nav-text">端口发现，发现大部分常用端口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#端口发现，发现全部端口，但-UDP-端口的扫描会非常慢"><span class="nav-number">3.0.4.</span> <span class="nav-text">端口发现，发现全部端口，但 UDP 端口的扫描会非常慢</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#显示-TCP-UDP-端口"><span class="nav-number">3.0.5.</span> <span class="nav-text">显示 TCP\UDP 端口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#侦测服务版本"><span class="nav-number">3.0.6.</span> <span class="nav-text">侦测服务版本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#扫做系统扫描"><span class="nav-number">3.0.7.</span> <span class="nav-text">扫做系统扫描</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#系统和服务检测"><span class="nav-number">3.0.8.</span> <span class="nav-text">系统和服务检测</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
