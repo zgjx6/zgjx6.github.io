@@ -98,7 +98,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/02/14/攻击者视角培训笔记/index.html">
 <meta property="og:site_name" content="zgjx的博客">
 <meta property="og:description" content="SQL注入 SQL注入原理 SQL注入练习系统http://www.freebuf.com/articles/web/34619.htmlhttp://www.cnblogs.com/superkrissV/https://github.com/Audi-1/sqli-labs  宽字节注入-%dfseay源代码审计系统 字符串使用16进制替换，如’root’替换为0x726f6f74 代码执行与">
-<meta property="og:updated_time" content="2018-05-18T07:43:44.022Z">
+<meta property="og:updated_time" content="2018-05-25T06:37:53.305Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="攻击者视角培训笔记">
 <meta name="twitter:description" content="SQL注入 SQL注入原理 SQL注入练习系统http://www.freebuf.com/articles/web/34619.htmlhttp://www.cnblogs.com/superkrissV/https://github.com/Audi-1/sqli-labs  宽字节注入-%dfseay源代码审计系统 字符串使用16进制替换，如’root’替换为0x726f6f74 代码执行与">
@@ -392,7 +392,8 @@
 </ul>
 <p>目录遍历漏洞的防御</p>
 <p>1.对用户的输入进行验证，特别是路径替代字符“../”<br>2.尽可能采用白名单的形式，验证所有输入<br>3.合理配置web服务器的目录权限<br>4.程序出错时，不要显示内部相关细节</p>
-<h4 id="敏感信息泄漏"><a href="#敏感信息泄漏" class="headerlink" title="敏感信息泄漏"></a>敏感信息泄漏</h4>
+<h4 id="敏感信息泄漏"><a href="#敏感信息泄漏" class="headerlink" title="敏感信息泄漏"></a>敏感信息泄漏</h4><h3 id="序列化与反序列化"><a href="#序列化与反序列化" class="headerlink" title="序列化与反序列化"></a>序列化与反序列化</h3><p>漏洞的形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而造成代码执行、getshell等一系列不可控的后果。<br>php中有两个函数<code>serialize()</code> 和<code>unserialize()</code>;Magic函数。<br><a href="http://www.freebuf.com/vuls/116705.html" target="_blank" rel="external">由HITCON 2016一道web聊一聊php反序列化漏洞</a></p>
+
       
     </div>
 
@@ -595,7 +596,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#SQL注入"><span class="nav-number">1.</span> <span class="nav-text">SQL注入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码执行与命令执行"><span class="nav-number">2.</span> <span class="nav-text">代码执行与命令执行</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xxe及ssrf"><span class="nav-number"></span> <span class="nav-text">xxe及ssrf</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#xxe"><span class="nav-number">1.</span> <span class="nav-text">xxe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ssrf"><span class="nav-number">2.</span> <span class="nav-text">ssrf</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目录遍历及敏感信息泄漏"><span class="nav-number"></span> <span class="nav-text">目录遍历及敏感信息泄漏</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#目录遍历"><span class="nav-number">1.</span> <span class="nav-text">目录遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#敏感信息泄漏"><span class="nav-number">2.</span> <span class="nav-text">敏感信息泄漏</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#SQL注入"><span class="nav-number">1.</span> <span class="nav-text">SQL注入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码执行与命令执行"><span class="nav-number">2.</span> <span class="nav-text">代码执行与命令执行</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xxe及ssrf"><span class="nav-number"></span> <span class="nav-text">xxe及ssrf</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#xxe"><span class="nav-number">1.</span> <span class="nav-text">xxe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ssrf"><span class="nav-number">2.</span> <span class="nav-text">ssrf</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目录遍历及敏感信息泄漏"><span class="nav-number"></span> <span class="nav-text">目录遍历及敏感信息泄漏</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#目录遍历"><span class="nav-number">1.</span> <span class="nav-text">目录遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#敏感信息泄漏"><span class="nav-number">2.</span> <span class="nav-text">敏感信息泄漏</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#序列化与反序列化"><span class="nav-number"></span> <span class="nav-text">序列化与反序列化</span></a></div>
             
 
           </div>

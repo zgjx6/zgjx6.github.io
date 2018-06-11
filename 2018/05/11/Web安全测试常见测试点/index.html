@@ -98,7 +98,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/05/11/Web安全测试常见测试点/index.html">
 <meta property="og:site_name" content="zgjx的博客">
 <meta property="og:description" content="点击劫持 12345&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;    &amp;lt;iframe src=&quot;http://10.221.159.43:8180/3ub2b/ssoAction.do&quot; security=&quot;restricted&quot; scrolling=&quot;no&quot; sandbox=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot;&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/htm">
-<meta property="og:updated_time" content="2018-05-18T07:42:44.586Z">
+<meta property="og:updated_time" content="2018-06-11T05:59:57.518Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web安全测试常见测试点">
 <meta name="twitter:description" content="点击劫持 12345&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;    &amp;lt;iframe src=&quot;http://10.221.159.43:8180/3ub2b/ssoAction.do&quot; security=&quot;restricted&quot; scrolling=&quot;no&quot; sandbox=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot;&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/htm">
@@ -372,7 +372,10 @@
 <li>服务器配置错误</li>
 <li>登录信息枚举</li>
 <li>目录列表</li>
-<li>敏感信息泄漏</li>
+<li>敏感信息泄漏<ul>
+<li><code>.DS_Store``.bak``.swp</code></li>
+</ul>
+</li>
 <li>应用程序路径溢出</li>
 <li>任意文件下载</li>
 <li>文件上传漏洞</li>
@@ -383,6 +386,8 @@
 <li>验证码绕过</li>
 <li>SQL注入</li>
 </ul>
+<p>绕过前端校验<br>前端页面注释<br>负数或溢出2^31</p>
+<p>nodejs依赖检查:nsp(Node Security Project)<br>如:<code>nsp check D:\code\security\juice-shop-7.1.0 --proxy http://172.17.18.80:8080</code><br>JWT令牌<br>robots.txt<br>security.txt<br>re-dos:<code>/((a+)+)b/.test(&#39;aaaaaaaaaaaaaaaaaaaaaaaaaaaaa&#39;)</code></p>
 
       
     </div>
