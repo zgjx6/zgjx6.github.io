@@ -98,7 +98,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/05/11/Web安全测试常见测试点/index.html">
 <meta property="og:site_name" content="zgjx的博客">
 <meta property="og:description" content="点击劫持 12345&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;    &amp;lt;iframe src=&quot;http://10.221.159.43:8180/3ub2b/ssoAction.do&quot; security=&quot;restricted&quot; scrolling=&quot;no&quot; sandbox=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot;&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/htm">
-<meta property="og:updated_time" content="2018-06-11T05:59:57.518Z">
+<meta property="og:updated_time" content="2018-07-24T01:17:25.010Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web安全测试常见测试点">
 <meta name="twitter:description" content="点击劫持 12345&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;    &amp;lt;iframe src=&quot;http://10.221.159.43:8180/3ub2b/ssoAction.do&quot; security=&quot;restricted&quot; scrolling=&quot;no&quot; sandbox=&quot;&quot; width=&quot;100%&quot; height=&quot;100%&quot;&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/htm">
@@ -373,13 +373,17 @@
 <li>登录信息枚举</li>
 <li>目录列表</li>
 <li>敏感信息泄漏<ul>
-<li><code>.DS_Store``.bak``.swp</code></li>
+<li><code>.DS_Store</code>(<a href="https://github.com/lijiejie/ds_store_exp" target="_blank" rel="external">https://github.com/lijiejie/ds_store_exp</a>)</li>
+<li><code>.bak``.swp</code></li>
 </ul>
 </li>
 <li>应用程序路径溢出</li>
 <li>任意文件下载</li>
-<li>文件上传漏洞</li>
-<li>会话定置</li>
+<li><p>文件上传漏洞<br>  0x00截断或%00<br>  后缀名绕过(大小写，不常见后缀如php2, php3, php4, php5, phps, <code>php</code>, pht, phtm, phtml)<br>  Content-Type：类型、大小写</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;HTML&gt; &lt;% java.io.File file = new java.io.File("E:/software/WEB-goat/WEB-GOAT/WebGoat-5.4/tomcat/webapps/WebGoat/mfe_target/090654.txt"); file.createNewFile(); %&gt; &lt;/HTML&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>会话定置</p>
+</li>
 <li>注销后会话未失效</li>
 <li>Struts2远程代码执行</li>
 <li>已解密登录请求</li>
@@ -387,7 +391,14 @@
 <li>SQL注入</li>
 </ul>
 <p>绕过前端校验<br>前端页面注释<br>负数或溢出2^31</p>
-<p>nodejs依赖检查:nsp(Node Security Project)<br>如:<code>nsp check D:\code\security\juice-shop-7.1.0 --proxy http://172.17.18.80:8080</code><br>JWT令牌<br>robots.txt<br>security.txt<br>re-dos:<code>/((a+)+)b/.test(&#39;aaaaaaaaaaaaaaaaaaaaaaaaaaaaa&#39;)</code></p>
+<p>nodejs依赖检查:nsp(Node Security Project),或插件<code>wappalyzer</code><br>如:<code>nsp check D:\code\security\juice-shop-7.1.0 --proxy http://172.17.18.80:8080</code><br>JWT令牌<br>robots.txt<br>security.txt<br>re-dos:<code>/((a+)+)b/.test(&#39;aaaaaaaaaaaaaaaaaaaaaaaaaaaaa&#39;)</code></p>
+<h2 id="CTF-Web测试的一般步骤"><a href="#CTF-Web测试的一般步骤" class="headerlink" title="CTF-Web测试的一般步骤"></a>CTF-Web测试的一般步骤</h2><ul>
+<li>御剑扫描</li>
+<li>Nmap扫描</li>
+<li>cookies</li>
+<li>页面隐藏提示</li>
+<li>wappalyzer查看网站架构</li>
+</ul>
 
       
     </div>
@@ -440,6 +451,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/09/06/GDB调试学习笔记/" rel="prev" title="GDB调试学习笔记">
+                GDB调试学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -485,8 +500,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/user.png"
@@ -501,7 +525,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -568,6 +592,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CTF-Web测试的一般步骤"><span class="nav-number">1.</span> <span class="nav-text">CTF-Web测试的一般步骤</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -98,7 +98,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/07/04/Nmap学习笔记/index.html">
 <meta property="og:site_name" content="zgjx的博客">
 <meta property="og:description" content="学习nmap过程中的一些笔记">
-<meta property="og:updated_time" content="2018-05-18T07:39:19.292Z">
+<meta property="og:updated_time" content="2018-07-16T06:18:12.062Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nmap学习笔记">
 <meta name="twitter:description" content="学习nmap过程中的一些笔记">
@@ -365,7 +365,9 @@
       
 
       
-        <h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h3><p><code>nmap –A</code>:全面扫描<br><code>nmap –Pn</code>:不检测主机存活。不用ping,当我们扫描一个有防火墙保护而封锁 ping 探针主机的时候是非常有用的。+<br><code>nmap –sP</code>:只是普通的ping扫描，主要用户检测主机是否存活<br><code>nmap –sL</code>:扫描的所有主机的列表<br><code>nmap –sn</code>:Ping所有已连接的活动网络主机<br><code>nmap –sT</code>:TCP扫描.扫描的速度快，准确性高,但是容易被防火墙和IDS(防入侵系统)发现<br><code>nmap –sS</code>:syn扫描。这是一种秘密的扫描方式之一.需要root权限（对于windows用户来说，是没有root权限这个概念的，root权限是linux的最高权限，对应windows的管理员权限）+<br><code>nmap –p</code>:后面跟指定的扫描端口<br><code>nmap –n</code>:后面对应的IP<br><code>nmap –O</code>:操作系统识别<br><code>nmap –sV</code>:服务的版本识别<br><code>nmap –F</code>:快速扫描</p>
+        <p><a href="http://www.nmap.com.cn/doc/manual.shtm" target="_blank" rel="external">Nmap中文手册</a></p>
+<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h3><p><code>nmap –A</code>:全面扫描<br><code>nmap –Pn</code>:不检测主机存活。不用ping,当我们扫描一个有防火墙保护而封锁 ping 探针主机的时候是非常有用的。+<br><code>nmap –sP</code>:只是普通的ping扫描，主要用户检测主机是否存活<br><code>nmap –sL</code>:扫描的所有主机的列表<br><code>nmap –sn</code>:Ping所有已连接的活动网络主机<br><code>nmap –sT</code>:TCP扫描.扫描的速度快，准确性高,但是容易被防火墙和IDS(防入侵系统)发现<br><code>nmap –sS</code>:syn扫描。这是一种秘密的扫描方式之一.需要root权限（对于windows用户来说，是没有root权限这个概念的，root权限是linux的最高权限，对应windows的管理员权限）+<br><code>nmap –p</code>:后面跟指定的扫描端口<br><code>nmap –n</code>:后面对应的IP<br><code>nmap –O</code>:操作系统识别<br><code>nmap –sV</code>:服务的版本识别<br><code>nmap –F</code>:快速扫描<br><code>namp -T 4</code>:一般使用4(Aggressive模式假设用户具有合适及可靠的网络从而加速扫描)</p>
+<p>常用<code>nmap -O -Pn -sS -sV -T 4 192.168.***.***</code></p>
 <h3 id="漏洞"><a href="#漏洞" class="headerlink" title="漏洞"></a>漏洞</h3><blockquote>
 <p>nmap脚本主要分为以下几类，在扫描时可根据需要设置–script=类别这种方式进行比较笼统的扫描：</p>
 <ul>
@@ -383,6 +385,7 @@
 <li><code>safe</code>: 此类与intrusive相反，属于安全性脚本  </li>
 <li><code>version</code>: 负责增强服务与版本扫描（Version Detection）功能的脚本  </li>
 <li><code>vuln</code>: 负责检查目标机是否有常见的漏洞（Vulnerability）</li>
+<li><code>mysql-brute</code>: 使用默认密码暴力破解mysql</li>
 </ul>
 </blockquote>
 <h3 id="最好的-NMAP-扫描策略"><a href="#最好的-NMAP-扫描策略" class="headerlink" title="最好的 NMAP 扫描策略"></a>最好的 NMAP 扫描策略</h3><h5 id="适用所有大小网络最好的-nmap-扫描策略"><a href="#适用所有大小网络最好的-nmap-扫描策略" class="headerlink" title="适用所有大小网络最好的 nmap 扫描策略"></a>适用所有大小网络最好的 nmap 扫描策略</h5><h5 id="主机发现，生成存活主机列表"><a href="#主机发现，生成存活主机列表" class="headerlink" title="主机发现，生成存活主机列表"></a>主机发现，生成存活主机列表</h5><p><code>$ nmap -sn -T4 -oG Discovery.gnmap 192.168.56.0/24</code><br><code>$ grep &quot;Status: Up&quot; Discovery.gnmap | cut -f 2 -d &#39; &#39; &gt; LiveHosts.txt</code></p>
@@ -518,7 +521,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
