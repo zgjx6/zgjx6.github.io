@@ -91,17 +91,17 @@
 
 
 
-<meta name="description" content="导读：Python中的装饰器经常用于有切面需求的场景，较为经典的有插入日志、性能测试、事务处理等。本文从闭包的概念引入，并以实例形式对装饰器及其应用进行了讲解。">
+<meta name="description" content="Python中的装饰器经常用于有切面需求的场景，较为经典的有插入日志、性能测试、事务处理等。本文从闭包的概念引入，并以实例形式对装饰器及其应用进行了讲解。">
 <meta name="keywords" content="文章">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅析Python中的闭包与装饰器">
 <meta property="og:url" content="http://yoursite.com/2017/05/19/浅析Python中的闭包与装饰器/index.html">
-<meta property="og:site_name" content="zgjx的博客">
-<meta property="og:description" content="导读：Python中的装饰器经常用于有切面需求的场景，较为经典的有插入日志、性能测试、事务处理等。本文从闭包的概念引入，并以实例形式对装饰器及其应用进行了讲解。">
-<meta property="og:updated_time" content="2017-07-11T05:44:14.176Z">
+<meta property="og:site_name" content="zgjx6的博客">
+<meta property="og:description" content="Python中的装饰器经常用于有切面需求的场景，较为经典的有插入日志、性能测试、事务处理等。本文从闭包的概念引入，并以实例形式对装饰器及其应用进行了讲解。">
+<meta property="og:updated_time" content="2018-09-26T01:37:57.521Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅析Python中的闭包与装饰器">
-<meta name="twitter:description" content="导读：Python中的装饰器经常用于有切面需求的场景，较为经典的有插入日志、性能测试、事务处理等。本文从闭包的概念引入，并以实例形式对装饰器及其应用进行了讲解。">
+<meta name="twitter:description" content="Python中的装饰器经常用于有切面需求的场景，较为经典的有插入日志、性能测试、事务处理等。本文从闭包的概念引入，并以实例形式对装饰器及其应用进行了讲解。">
 
 
 
@@ -110,7 +110,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -135,7 +135,7 @@
 
 
 
-  <title>浅析Python中的闭包与装饰器 | zgjx的博客</title>
+  <title>浅析Python中的闭包与装饰器 | zgjx6的博客</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -172,7 +172,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">zgjx的博客</span>
+        <span class="site-title">zgjx6的博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -278,13 +278,13 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/19/浅析Python中的闭包与装饰器/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zgjx">
+      <meta itemprop="name" content="zgjx6">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/user.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zgjx的博客">
+      <meta itemprop="name" content="zgjx6的博客">
     </span>
 
     
@@ -361,7 +361,7 @@
       
 
       
-        <p>导读：Python中的装饰器经常用于有切面需求的场景，较为经典的有插入日志、性能测试、事务处理等。本文从闭包的概念引入，并以实例形式对装饰器及其应用进行了讲解。<br><a id="more"></a></p>
+        <p>Python中的装饰器经常用于有切面需求的场景，较为经典的有插入日志、性能测试、事务处理等。本文从闭包的概念引入，并以实例形式对装饰器及其应用进行了讲解。<br><a id="more"></a></p>
 <h3 id="Python变量作用域"><a href="#Python变量作用域" class="headerlink" title="Python变量作用域"></a>Python变量作用域</h3><p>在了解闭包之前，我们得先了解一下python解释器查找变量时的规则。在python中，查找一个变量名称的顺序为local--&gt;enclosing function locals--&gt;global--&gt;builtin，简称LEGB。它们各自的含义如下：</p>
 <ol>
 <li>Local - 当前所在命名空间（如函数、模块），函数的参数也属于命名空间内的变量</li>
@@ -421,8 +421,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/19/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2017/05/19/欢迎使用 Cmd Markdown 编辑阅读器/" rel="next" title="欢迎使用 Cmd Markdown 编辑阅读器">
+                <i class="fa fa-chevron-left"></i> 欢迎使用 Cmd Markdown 编辑阅读器
               </a>
             
           </div>
@@ -494,10 +494,10 @@
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/user.png"
-               alt="zgjx" />
-          <p class="site-author-name" itemprop="name">zgjx</p>
+               alt="zgjx6" />
+          <p class="site-author-name" itemprop="name">zgjx6</p>
            
-              <p class="site-description motion-element" itemprop="description">My blog</p>
+              <p class="site-description motion-element" itemprop="description">zgjx6的个人博客#^_^#</p>
           
         </div>
         <nav class="site-state motion-element">
@@ -505,7 +505,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -516,7 +516,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -527,7 +527,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -616,7 +616,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">zgjx</span>
+  <span class="author" itemprop="copyrightHolder">zgjx6</span>
 </div>
 
 

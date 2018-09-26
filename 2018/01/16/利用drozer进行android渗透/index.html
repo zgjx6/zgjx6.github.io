@@ -91,17 +91,17 @@
 
 
 
-<meta name="description" content="Drozer是一款android渗透测试软件，本文是关于drozer的使用总结">
+<meta name="description" content="介绍Drozer原名mercury，是一款面向Android的综合安全评估和攻击框架，它可以全面评估安卓app的安全性，并帮助团队把app的安全风险保持在可控范围内。它可以通过与Dalivik VM、其它应用程序的IPC端点以及底层操作系统的交互，避免正处于开发阶段的android应用程序和设备暴露出不可接受的安全漏洞。 安装在drozer官网下方找到windows(.msi)和android(.">
 <meta name="keywords" content="文章">
 <meta property="og:type" content="article">
-<meta property="og:title" content="利用drozer进行android渗透">
+<meta property="og:title" content="利用Drozer进行Android渗透">
 <meta property="og:url" content="http://yoursite.com/2018/01/16/利用drozer进行android渗透/index.html">
-<meta property="og:site_name" content="zgjx的博客">
-<meta property="og:description" content="Drozer是一款android渗透测试软件，本文是关于drozer的使用总结">
-<meta property="og:updated_time" content="2018-01-18T05:23:28.848Z">
+<meta property="og:site_name" content="zgjx6的博客">
+<meta property="og:description" content="介绍Drozer原名mercury，是一款面向Android的综合安全评估和攻击框架，它可以全面评估安卓app的安全性，并帮助团队把app的安全风险保持在可控范围内。它可以通过与Dalivik VM、其它应用程序的IPC端点以及底层操作系统的交互，避免正处于开发阶段的android应用程序和设备暴露出不可接受的安全漏洞。 安装在drozer官网下方找到windows(.msi)和android(.">
+<meta property="og:updated_time" content="2018-09-26T01:40:32.075Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="利用drozer进行android渗透">
-<meta name="twitter:description" content="Drozer是一款android渗透测试软件，本文是关于drozer的使用总结">
+<meta name="twitter:title" content="利用Drozer进行Android渗透">
+<meta name="twitter:description" content="介绍Drozer原名mercury，是一款面向Android的综合安全评估和攻击框架，它可以全面评估安卓app的安全性，并帮助团队把app的安全风险保持在可控范围内。它可以通过与Dalivik VM、其它应用程序的IPC端点以及底层操作系统的交互，避免正处于开发阶段的android应用程序和设备暴露出不可接受的安全漏洞。 安装在drozer官网下方找到windows(.msi)和android(.">
 
 
 
@@ -110,7 +110,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -135,7 +135,7 @@
 
 
 
-  <title>利用drozer进行android渗透 | zgjx的博客</title>
+  <title>利用Drozer进行Android渗透 | zgjx6的博客</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -172,7 +172,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">zgjx的博客</span>
+        <span class="site-title">zgjx6的博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -278,13 +278,13 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/16/利用drozer进行android渗透/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zgjx">
+      <meta itemprop="name" content="zgjx6">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/user.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zgjx的博客">
+      <meta itemprop="name" content="zgjx6的博客">
     </span>
 
     
@@ -292,7 +292,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">利用drozer进行android渗透</h1>
+          <h1 class="post-title" itemprop="name headline">利用Drozer进行Android渗透</h1>
         
 
         <div class="post-meta">
@@ -350,10 +350,6 @@
           
 
           
-              <div class="post-description">
-                  Drozer是一款android渗透测试软件，本文是关于drozer的使用总结
-              </div>
-          
 
         </div>
       </header>
@@ -395,26 +391,13 @@
 </ul>
 </li>
 <li><p>确定攻击面</p>
-<p> dz&gt; run app.package.attacksurface com.mwr.example.sieve<br> Attack Surface:</p>
-<pre><code>3 activities exported
-0 broadcast receivers exported
-2 content providers exported
-2 services exported
-    is debuggable
-</code></pre></li>
+<p> dz&gt; run app.package.attacksurface com.mwr.example.sieve<br> Attack Surface:<br> ​    3 activities exported<br> ​    0 broadcast receivers exported<br> ​    2 content providers exported<br> ​    2 services exported<br> ​        is debuggable</p>
+</li>
 <li><p>Activity</p>
 </li>
 </ol>
-<p>1) 获取 activity 信息</p>
-<pre><code>dz&gt; run app.activity.info -a com.mwr.example.sieve
-Package: com.mwr.example.sieve
-    com.mwr.example.sieve.FileSelectActivity
-        Permission: null
-    com.mwr.example.sieve.MainLoginActivity
-        Permission: null
-    com.mwr.example.sieve.PWList
-        Permission: null
-</code></pre><p>2) 为了测试，可以先在sieve中设置好一个密码，然后退出。再在PC上执行指令直接启动 activity</p>
+<p>1) 获取 activity 信息<br>​<br>​    dz&gt; run app.activity.info -a com.mwr.example.sieve<br>​    Package: com.mwr.example.sieve<br>​        com.mwr.example.sieve.FileSelectActivity<br>​            Permission: null<br>​        com.mwr.example.sieve.MainLoginActivity<br>​            Permission: null<br>​        com.mwr.example.sieve.PWList<br>​            Permission: null</p>
+<p>2) 为了测试，可以先在sieve中设置好一个密码，然后退出。再在PC上执行指令直接启动 activity</p>
 <pre><code>dz&gt; run app.activity.start --component com.mwr.example.sieve com.mwr.example.sieve.PWList
 </code></pre><p>可以看到，sieve没有输入密码就直接进入了密码保存的界面，输入密码的界面被直接绕过了。</p>
 <ol>
@@ -538,8 +521,8 @@ java=java的安装路径
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/20/webpack中使用wowjs和animate.css/" rel="next" title="webpack中使用wowjs和animate.css">
-                <i class="fa fa-chevron-left"></i> webpack中使用wowjs和animate.css
+              <a href="/2017/11/20/Webpack中使用wowjs和animate.css/" rel="next" title="Webpack中使用wowjs和animate.css">
+                <i class="fa fa-chevron-left"></i> Webpack中使用wowjs和animate.css
               </a>
             
           </div>
@@ -547,10 +530,6 @@ java=java的安装路径
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/02/14/攻击者视角培训笔记/" rel="prev" title="攻击者视角培训笔记">
-                攻击者视角培训笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -611,10 +590,10 @@ java=java的安装路径
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/user.png"
-               alt="zgjx" />
-          <p class="site-author-name" itemprop="name">zgjx</p>
+               alt="zgjx6" />
+          <p class="site-author-name" itemprop="name">zgjx6</p>
            
-              <p class="site-description motion-element" itemprop="description">My blog</p>
+              <p class="site-description motion-element" itemprop="description">zgjx6的个人博客#^_^#</p>
           
         </div>
         <nav class="site-state motion-element">
@@ -622,7 +601,7 @@ java=java的安装路径
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -633,7 +612,7 @@ java=java的安装路径
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -644,7 +623,7 @@ java=java的安装路径
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -733,7 +712,7 @@ java=java的安装路径
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">zgjx</span>
+  <span class="author" itemprop="copyrightHolder">zgjx6</span>
 </div>
 
 

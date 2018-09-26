@@ -91,17 +91,17 @@
 
 
 
-<meta name="description" content="ruby的gem默认不会使用系统的代理，使用代理每次都需要添加参数--http-proxy，感觉很麻烦，搜索了一下也没找到什么好的办法。后来找到了gem的代码，是使用ruby写的，简单修改一下就可以永久设置好gem的代理，不用每次都加上代理的参数了。">
+<meta name="description" content="Ruby的gem默认不会使用系统的代理，使用代理每次都需要添加参数--http-proxy，感觉很麻烦，搜索了一下也没找到什么好的办法。后来找到了gem的代码，是使用ruby写的，简单修改一下就可以永久设置好gem的代理，不用每次都加上代理的参数了。">
 <meta name="keywords" content="文章">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ruby中rails的gem和bundle配置系统代理">
-<meta property="og:url" content="http://yoursite.com/2017/08/25/ruby gem通过修改文件配置代理/index.html">
-<meta property="og:site_name" content="zgjx的博客">
-<meta property="og:description" content="ruby的gem默认不会使用系统的代理，使用代理每次都需要添加参数--http-proxy，感觉很麻烦，搜索了一下也没找到什么好的办法。后来找到了gem的代码，是使用ruby写的，简单修改一下就可以永久设置好gem的代理，不用每次都加上代理的参数了。">
-<meta property="og:updated_time" content="2017-08-28T06:58:17.424Z">
+<meta property="og:title" content="Ruby中rails的gem和bundle配置系统代理">
+<meta property="og:url" content="http://yoursite.com/2017/08/25/Ruby gem通过修改文件配置代理/index.html">
+<meta property="og:site_name" content="zgjx6的博客">
+<meta property="og:description" content="Ruby的gem默认不会使用系统的代理，使用代理每次都需要添加参数--http-proxy，感觉很麻烦，搜索了一下也没找到什么好的办法。后来找到了gem的代码，是使用ruby写的，简单修改一下就可以永久设置好gem的代理，不用每次都加上代理的参数了。">
+<meta property="og:updated_time" content="2018-09-26T01:24:28.310Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ruby中rails的gem和bundle配置系统代理">
-<meta name="twitter:description" content="ruby的gem默认不会使用系统的代理，使用代理每次都需要添加参数--http-proxy，感觉很麻烦，搜索了一下也没找到什么好的办法。后来找到了gem的代码，是使用ruby写的，简单修改一下就可以永久设置好gem的代理，不用每次都加上代理的参数了。">
+<meta name="twitter:title" content="Ruby中rails的gem和bundle配置系统代理">
+<meta name="twitter:description" content="Ruby的gem默认不会使用系统的代理，使用代理每次都需要添加参数--http-proxy，感觉很麻烦，搜索了一下也没找到什么好的办法。后来找到了gem的代码，是使用ruby写的，简单修改一下就可以永久设置好gem的代理，不用每次都加上代理的参数了。">
 
 
 
@@ -110,7 +110,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -129,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/25/ruby gem通过修改文件配置代理/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/25/Ruby gem通过修改文件配置代理/"/>
 
 
 
 
 
-  <title>ruby中rails的gem和bundle配置系统代理 | zgjx的博客</title>
+  <title>Ruby中rails的gem和bundle配置系统代理 | zgjx6的博客</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -172,7 +172,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">zgjx的博客</span>
+        <span class="site-title">zgjx6的博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -275,16 +275,16 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/25/ruby gem通过修改文件配置代理/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/25/Ruby gem通过修改文件配置代理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zgjx">
+      <meta itemprop="name" content="zgjx6">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/user.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zgjx的博客">
+      <meta itemprop="name" content="zgjx6的博客">
     </span>
 
     
@@ -292,7 +292,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ruby中rails的gem和bundle配置系统代理</h1>
+          <h1 class="post-title" itemprop="name headline">Ruby中rails的gem和bundle配置系统代理</h1>
         
 
         <div class="post-meta">
@@ -361,7 +361,7 @@
       
 
       
-        <p>ruby的gem默认不会使用系统的代理，使用代理每次都需要添加参数<code>--http-proxy</code>，感觉很麻烦，搜索了一下也没找到什么好的办法。后来找到了gem的代码，是使用ruby写的，简单修改一下就可以永久设置好gem的代理，不用每次都加上代理的参数了。<br><a id="more"></a></p>
+        <p>Ruby的gem默认不会使用系统的代理，使用代理每次都需要添加参数<code>--http-proxy</code>，感觉很麻烦，搜索了一下也没找到什么好的办法。后来找到了gem的代码，是使用ruby写的，简单修改一下就可以永久设置好gem的代理，不用每次都加上代理的参数了。<br><a id="more"></a></p>
 <h4 id="gem的代理"><a href="#gem的代理" class="headerlink" title="gem的代理"></a>gem的代理</h4><ul>
 <li>首先找到gem文件的位置，一般都在ruby的安装目录下，如C:\RailsInstaller\Ruby2.3.0\bin，如果找不到可以在命令行使用指令找，win下是<code>where gem</code>，linux下是<code>which gem</code>。</li>
 <li>然后打开gem的文件，win是<code>gem.cmd</code>，linux是<code>gem</code>。然后在文件最后面找到如下代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">begin</div><div class="line">  Gem::GemRunner.new.run args</div><div class="line">rescue Gem::SystemExitException =&gt; e</div><div class="line">  exit e.exit_code</div><div class="line">end</div></pre></td></tr></table></figure>
@@ -414,8 +414,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/25/railsinstaller安装后执行rails提示系统找不到指定的路径的解决办法/" rel="next" title="railsinstaller安装后执行rails提示系统找不到指定的路径的解决办法">
-                <i class="fa fa-chevron-left"></i> railsinstaller安装后执行rails提示系统找不到指定的路径的解决办法
+              <a href="/2017/08/25/Railsinstaller安装后执行rails提示系统找不到指定的路径的解决办法/" rel="next" title="Railsinstaller安装后执行rails提示系统找不到指定的路径的解决办法">
+                <i class="fa fa-chevron-left"></i> Railsinstaller安装后执行rails提示系统找不到指定的路径的解决办法
               </a>
             
           </div>
@@ -424,8 +424,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/20/XSS学习笔记/" rel="prev" title="XSS学习笔记">
-                XSS学习笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/20/Webpack中使用wowjs和animate.css/" rel="prev" title="Webpack中使用wowjs和animate.css">
+                Webpack中使用wowjs和animate.css <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -487,10 +487,10 @@
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/user.png"
-               alt="zgjx" />
-          <p class="site-author-name" itemprop="name">zgjx</p>
+               alt="zgjx6" />
+          <p class="site-author-name" itemprop="name">zgjx6</p>
            
-              <p class="site-description motion-element" itemprop="description">My blog</p>
+              <p class="site-description motion-element" itemprop="description">zgjx6的个人博客#^_^#</p>
           
         </div>
         <nav class="site-state motion-element">
@@ -498,7 +498,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -509,7 +509,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -520,7 +520,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -609,7 +609,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">zgjx</span>
+  <span class="author" itemprop="copyrightHolder">zgjx6</span>
 </div>
 
 
