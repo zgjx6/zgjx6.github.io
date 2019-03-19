@@ -98,7 +98,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/11/12/浅析服务器端请求伪造SSRF/index.html">
 <meta property="og:site_name" content="zgjx6的博客">
 <meta property="og:description" content="导读:很多Web应用都提供通过用户指定的地址读取服务器本地或远程文件/数据的功能，如获取图片、下载文件、读取数据等，如果此功能被恶意使用，则可以利用服务器为跳板达成攻击目的，此类漏洞称为服务器端请求伪造。">
-<meta property="og:updated_time" content="2019-03-19T05:51:14.723Z">
+<meta property="og:updated_time" content="2019-03-19T05:59:23.393Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅析服务器端请求伪造SSRF">
 <meta name="twitter:description" content="导读:很多Web应用都提供通过用户指定的地址读取服务器本地或远程文件/数据的功能，如获取图片、下载文件、读取数据等，如果此功能被恶意使用，则可以利用服务器为跳板达成攻击目的，此类漏洞称为服务器端请求伪造。">
@@ -361,8 +361,8 @@
       
 
       
-        <pre><code>导读:很多Web应用都提供通过用户指定的地址读取服务器本地或远程文件/数据的功能，如获取图片、下载文件、读取数据等，如果此功能被恶意使用，则可以利用服务器为跳板达成攻击目的，此类漏洞称为服务器端请求伪造。
-</code></pre><a id="more"></a>
+        <p>导读:很多Web应用都提供通过用户指定的地址读取服务器本地或远程文件/数据的功能，如获取图片、下载文件、读取数据等，如果此功能被恶意使用，则可以利用服务器为跳板达成攻击目的，此类漏洞称为服务器端请求伪造。</p>
+<a id="more"></a>
 <h3 id="SSRF简介"><a href="#SSRF简介" class="headerlink" title="SSRF简介"></a>SSRF简介</h3><p><code>SSRF</code>的全称为<code>Server-Side Request Forgery</code>，即服务器端请求伪造，利用此漏洞可从服务器端发起请求，从而突破客户端获取不到数据的限制。</p>
 <p>它与常见的<code>CSRF</code>（<code>Cross-Site Request Forgery</code>）跨站请求伪造有很多相似之处，它们都是通过一些技术手段使被攻击者发出攻击者伪造的请求，从而达到攻击者的目的。它们的不同之处在于，<code>CSRF</code>的攻击对象是客户端，而<code>SSRF</code>的攻击对象是服务器端；<code>CSRF</code>的攻击目的大多是利用用户的<code>Cookies</code>信息伪造用户请求发送至服务器，而<code>SSRF</code>的攻击目的大多是以服务器为跳板绕过<code>ACL</code>（<code>Access Control List</code>,访问控制列表）或其他网络限制从而进行内网渗透，或任意读取服务器端文件等。</p>
 <p>简单示例：</p>
